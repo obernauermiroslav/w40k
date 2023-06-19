@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Ship types</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-$END$
+<section>
+    <div class="container">
+        <div class="row">
+
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Author</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ship: ${ships}">
+                    <th scope="row" th:text="${ship.getId()} +."></th>
+                    <td th:text="${ship.getTitle()}"></td>
+                    <td>
+                        <a th:href="'/ships/' + ${ship.getType().name().toLowerCase()}" th:text="${ship.getType().label}"></a>
+
+                    </td>
+
+                    <td>
+                        <a th:href="${'/users/' + ship.getUser().getId()}" th:text="${ship.getUser().getUsername()}"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 </body>
 </html>

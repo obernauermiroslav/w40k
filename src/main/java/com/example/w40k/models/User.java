@@ -2,6 +2,8 @@ package com.example.w40k.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User{
@@ -15,7 +17,11 @@ public class User{
 
     private String secret;
 
-    private List<Ships> ships
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Ships> ships;
+
+    public User() {
+    }
 
     public User(Long id, String email, String username, String secret) {
         this.id = id;
@@ -23,10 +29,6 @@ public class User{
         this.username = username;
         this.secret = secret;
     }
-
-    public User() {
-    }
-
 
     public void setId(Long id) {
         this.id = id;
