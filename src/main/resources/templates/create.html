@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+  <meta charset="UTF-8">
+  <title>Ship Create</title>
+</head>
+<body>
+
+<section>
+  <div class="container">
+    <h3>Create Ship</h3>
+    <form action="/create" th:method="post">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" th:value="${ship.getTitle()}" placeholder="... ship title ...">
+      </div>
+      <div class="mb-3">
+        <label for="type" class="form-label">Type</label>
+        <select name="type" id="type" class="form-select" aria-label="select type">
+          <option th:each="type : ${T(com.example.w40k.models.ShipClass).values()}"
+                  th:value="${type.label}" th:text="${type.label}"
+                  th:selected="${type.equals(ship.getType())}"></option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="user" class="form-label">User</label>
+        <select name="user" id="user" class="form-select" aria-label="select user">
+          <option th:each="role : ${T(com.example.w40k.models.UserRole).values()}"
+                  th:value="${role.label}" th:text="${role.label}"
+                  th:selected="${role.equals(ship.getUser())}"></option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-success">Create</button>
+    </form>
+  </div>
+  </div>
+</section>
+
+
+</body>
+</html>

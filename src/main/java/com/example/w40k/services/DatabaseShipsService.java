@@ -19,4 +19,11 @@ public class DatabaseShipsService implements ShipService {
     public List<Ships> findAll() {
         return shipRepository.findAll();
     }
+
+    @Override
+    public Ships save(Ships ships) {
+        return shipRepository.save(ships);
+    }
+
+
 }

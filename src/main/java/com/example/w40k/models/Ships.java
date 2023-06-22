@@ -1,6 +1,7 @@
 package com.example.w40k.models;
 
 import jakarta.persistence.*;
+import org.apache.catalina.User;
 
 @Entity
 @Table(name = "ships")
@@ -14,12 +15,27 @@ public class Ships {
     @Enumerated(EnumType.STRING)
     private ShipClass type;
 
-    public Ships(Long id, String title, ShipClass type, User user) {
+    @Enumerated(EnumType.STRING)
+    private UserRole user;
+
+    public Ships(Long id, String title, ShipClass type, UserRole user) {
         this.id = id;
         this.title = title;
-
         this.type = type;
         this.user = user;
+    }
+
+    public Ships() {
+    }
+
+    // Getters and setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -38,25 +54,11 @@ public class Ships {
         this.type = type;
     }
 
-    public User getUser() {
+    public UserRole getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserRole user) {
         this.user = user;
-    }
-
-    @ManyToOne
-    private User user;
-
-    public Ships() {
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 }

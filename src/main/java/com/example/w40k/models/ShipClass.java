@@ -11,4 +11,13 @@ public enum ShipClass {
     ShipClass(String label) {
        this.label = label;
     }
+
+    public static ShipClass fromLabel(String label){
+        for( ShipClass type : ShipClass.values()){
+            if(type.label.equals(label)){
+                return type;
+            }
+        }
+        return null;
+    }
 }
