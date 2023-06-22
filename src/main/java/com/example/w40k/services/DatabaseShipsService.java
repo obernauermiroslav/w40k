@@ -5,6 +5,7 @@ import com.example.w40k.repositories.ShipRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DatabaseShipsService implements ShipService {
@@ -21,9 +22,17 @@ public class DatabaseShipsService implements ShipService {
     }
 
     @Override
+    public Optional<Ships> findById(Long id) {
+        return shipRepository.findById(id);
+    }
+
+    @Override
     public Ships save(Ships ships) {
         return shipRepository.save(ships);
     }
 
-
+    @Override
+    public void delete(Ships ships) {
+        shipRepository.delete(ships);
+    }
 }

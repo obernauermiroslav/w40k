@@ -13,7 +13,7 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <li>
-                    <a href="/create" class="nav-link px-2 text-secondary">Create Ship</a>
+                    <a href="/create" class="nav-link px-2 text-secondary">Create new Ship</a>
                 </li>
                 <tr>
                     <th scope="col">#</th>
@@ -25,7 +25,8 @@
                 <tbody>
                 <tr th:each="ship: ${ships}">
                     <th scope="row" th:text="${ship.getId()} + '.'"></th>
-                    <td th:text="${ship.getTitle()}"></td>
+                    <td>
+                      <a th:href="'/delete/' + ${ship.getId()}" th:text="${ship.getTitle()}"></a>
                     <td>
                         <a th:href="'/user/' + ${ship.getType().name().toLowerCase()}" th:text="${ship.getType().label}"></a>
                     </td>

@@ -28,8 +28,6 @@ public class Ships {
     public Ships() {
     }
 
-    // Getters and setters
-
     public Long getId() {
         return id;
     }
