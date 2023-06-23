@@ -78,7 +78,7 @@ public class ShipController {
         shipService.save(ship);
         redirectAttributes.addFlashAttribute("successMessage", "Success: Ship was created!");
 
-        return "redirect:/";
+        return "redirect:/index";
     }
 
     @GetMapping("/delete/{id}")
@@ -102,7 +102,7 @@ public class ShipController {
             shipService.delete(ship);
             redirectAttributes.addFlashAttribute("successMessage", "Success: Ship was deleted!");
         }
-        return "redirect:/";
+        return "redirect:/index";
     }
 
     @ExceptionHandler({MethodArgumentTypeMismatchException.class})

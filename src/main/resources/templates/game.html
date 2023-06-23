@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Dice Game</title>
+</head>
+<body>
+<h1>Dice Game</h1>
+<div id="game">
+    <form method="POST" action="/game">
+        <p>Choose your ship:</p>
+        <ul class="ship-list">
+            <li><button type="submit" name="shipId" value="1">Cobra-class Destroyer</button></li>
+            <li><button type="submit" name="shipId" value="2">Hunter-class Destroyer</button></li>
+            <li><button type="submit" name="shipId" value="3">Viper-class Destroyer</button></li>
+            <li><button type="submit" name="shipId" value="4">Gladius-class Frigate</button></li>
+            <li><button type="submit" name="shipId" value="5">Sword-class Heavy Frigate</button></li>
+            <li><button type="submit" name="shipId" value="6">Firestorm-class Frigate</button></li>
+            <li><button type="submit" name="shipId" value="7">Endeavor Class Light Cruiser</button></li>
+            <li><button type="submit" name="shipId" value="8">Lunar Class Cruiser</button></li>
+            <li><button type="submit" name="shipId" value="9">Armageddon Class Battle Cruiser</button></li>
+            <li><button type="submit" name="shipId" value="10">Vengeance Class Grand Cruiser</button></li>
+            <li><button type="submit" name="shipId" value="11">Punisher-class Strike Cruiser</button></li>
+            <li><button type="submit" name="shipId" value="12">Retribution Class Battleship</button></li>
+            <li><button type="submit" name="shipId" value="13">Emperor Class Battleship</button></li>
+            <li><button type="submit" name="shipId" value="14">Ironclad-class Battle Barge</button></li>
+        </ul>
+    </form>
+
+    <div id="result" th:if="${result}">
+        <h2>Result:</h2>
+        <p>Your ship: <span th:text="${playerShip.title}"></span> attacks for <span th:text="${userDiceRoll}"></span></p>
+        <p>Computer's ship: <span th:text="${computerShip.title}"></span> attacks for <span th:text="${computerDiceRoll}"></span></p>
+        <p th:text="${result}"></p>
+    </div>
+
+
+</div>
+</body>
+</html>
+
+
+

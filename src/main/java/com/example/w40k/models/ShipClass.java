@@ -7,7 +7,6 @@ public enum ShipClass {
 
     public final String label;
 
-
     ShipClass(String label) {
        this.label = label;
     }

@@ -9,18 +9,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 @SpringBootApplication
 public class W40kApplication implements CommandLineRunner {
 
 	private final ShipRepository shipRepository;
 
-
-
 	@Autowired
 	public W40kApplication(ShipRepository shipRepository) {
 		this.shipRepository = shipRepository;
-
 	}
 
 	public static void main(String[] args) {
@@ -46,12 +42,5 @@ public class W40kApplication implements CommandLineRunner {
 		shipRepository.save(new Ships(12L, "Retribution Class Battleship", ShipClass.BATTLESHIPS, UserRole.IMPERIAL_NAVY));
 		shipRepository.save(new Ships(13L, "Emperor Class Battleship", ShipClass.BATTLESHIPS, UserRole.IMPERIAL_NAVY));
 		shipRepository.save(new Ships(14L, "Ironclad-class Battle Barge", ShipClass.BATTLESHIPS,UserRole.SPACE_MARINES));
-
-
-
-
-
-
-
 	}
 }

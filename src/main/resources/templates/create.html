@@ -13,7 +13,7 @@
     <form action="/create" th:method="post">
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" name="title" th:value="${ship.getTitle()}" placeholder="... ship title ...">
+        <input type="text" class="form-control" id="title" name="title" th:value="${ship.getTitle()}" placeholder="... ship title ..." required>
       </div>
       <div class="mb-3">
         <label for="type" class="form-label">Type</label>
