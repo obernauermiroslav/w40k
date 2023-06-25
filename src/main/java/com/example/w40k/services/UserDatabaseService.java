@@ -1,13 +1,9 @@
 package com.example.w40k.services;
 
-import com.example.w40k.models.Ships;
 import com.example.w40k.models.User;
-import com.example.w40k.repositories.ShipRepository;
 import com.example.w40k.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +32,3 @@ public class UserDatabaseService implements UserService {
         return userRepository.save(user);
     }
 }
-
-
-

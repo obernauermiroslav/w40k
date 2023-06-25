@@ -1,7 +1,6 @@
 package com.example.w40k.models;
 
 import jakarta.persistence.*;
-import org.apache.catalina.User;
 
 @Entity
 @Table(name = "ships")

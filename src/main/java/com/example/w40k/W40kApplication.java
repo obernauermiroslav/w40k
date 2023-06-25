@@ -42,5 +42,11 @@ public class W40kApplication implements CommandLineRunner {
 		shipRepository.save(new Ships(12L, "Retribution Class Battleship", ShipClass.BATTLESHIPS, UserRole.IMPERIAL_NAVY));
 		shipRepository.save(new Ships(13L, "Emperor Class Battleship", ShipClass.BATTLESHIPS, UserRole.IMPERIAL_NAVY));
 		shipRepository.save(new Ships(14L, "Ironclad-class Battle Barge", ShipClass.BATTLESHIPS,UserRole.SPACE_MARINES));
+
+		shipRepository.save(new Ships(15L, "Despoiler Class Battleship", ShipClass.BATTLESHIPS,UserRole.CHAOS_FORCES));
+		shipRepository.save(new Ships(16L, "Retaliator Class Grand Cruiser", ShipClass.CRUISERS,UserRole.CHAOS_FORCES));
+		shipRepository.save(new Ships(17L, "Hellbringer Class Light Cruiser", ShipClass.CRUISERS,UserRole.CHAOS_FORCES));
+		shipRepository.save(new Ships(18L, "Iconoclast Destroyer Battleship", ShipClass.ESCORTS,UserRole.CHAOS_FORCES));
+		shipRepository.save(new Ships(19L, "Aeternum Dread Strike Cruiser", ShipClass.CRUISERS,UserRole.CHAOS_FORCES));
 	}
 }

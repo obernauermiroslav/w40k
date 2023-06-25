@@ -1,0 +1,2 @@
+I created game, where you can create, delete ships and then fight with them, you imply choose one ship, then computer will choose one random ship and will roll with virtual dice, If you win, enemy ship will be destroyed, if you loose , your ship will be destroyed, the fight can continue until one side has no more ships.
+Still in progress, will continue with more features

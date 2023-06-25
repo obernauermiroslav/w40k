@@ -7,6 +7,8 @@ import java.util.Optional;
 public interface ShipService {
 List<Ships> findAll();
 
+List<Ships> findChaos();
+
     Ships save(Ships ships);
 
      Optional<Ships> findById(Long id);

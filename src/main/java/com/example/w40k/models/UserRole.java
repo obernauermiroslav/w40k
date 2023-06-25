@@ -2,7 +2,8 @@ package com.example.w40k.models;
 
 public enum UserRole {
     IMPERIAL_NAVY("Imperial Navy"),
-    SPACE_MARINES("Space Marines");
+    SPACE_MARINES("Space Marines"),
+    CHAOS_FORCES("Chaos Forces");
 
     public final String label;
 
