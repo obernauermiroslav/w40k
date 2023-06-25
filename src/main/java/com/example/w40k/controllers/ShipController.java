@@ -21,11 +21,11 @@ public class ShipController {
         String redirectUrl = "http://localhost:3000/";
 
         if (shipClass.equalsIgnoreCase("escorts")) {
-            redirectUrl = "https://warhammer40k.fandom.com/wiki/Escorts";
+            redirectUrl = "https://warhammer40k.fandom.com/wiki/Escort";
         } else if (shipClass.equalsIgnoreCase("cruisers")) {
-            redirectUrl = "https://warhammer40k.fandom.com/wiki/Cruisers";
+            redirectUrl = "https://warhammer40k.fandom.com/wiki/Cruiser";
         } else if (shipClass.equalsIgnoreCase("battleships")) {
-            redirectUrl = "https://warhammer40k.fandom.com/wiki/Battleships";
+            redirectUrl = "https://warhammer40k.fandom.com/wiki/Battleship";
         }
 
         RedirectView redirectView = new RedirectView();
