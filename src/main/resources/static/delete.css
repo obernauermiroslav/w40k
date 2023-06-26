@@ -34,18 +34,19 @@ section {
 .form-select {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid black;
     border-radius: 4px;
     box-sizing: border-box;
     margin-bottom: 20px;
 }
 
 .btn {
+    font-size: 16px;
     display: inline-block;
     padding: 10px 20px;
     background-color: #dc3545;
-    color: #ffffff;
-    border: none;
+    color: black;
+    border: 1px solid black;
     border-radius: 4px;
     cursor: pointer;
 }
