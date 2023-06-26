@@ -18,6 +18,14 @@
             </ul>
         </form>
     </div>
+
+    <div id="result" th:if="${result}">
+        <h2>Result:</h2>
+        <p>Your ship: <span th:text="${playerShip?.title}"></span> attacks for <span th:text="${userDiceRoll}"></span></p>
+        <p>Computer's ship: <span th:text="${computerShip?.title}"></span> attacks for <span th:text="${computerDiceRoll}"></span></p>
+        <p th:text="${result}"></p>
+    </div>
+
         <div id="chaosShips">
             <h2>Chaos Ships:</h2>
             <ul class="ship-list">
@@ -26,13 +34,8 @@
                 </li>
             </ul>
         </div>
-    </div>
 
-    <div id="result" th:if="${result}">
-        <h2>Result:</h2>
-        <p>Your ship: <span th:text="${playerShip?.title}"></span> attacks for <span th:text="${userDiceRoll}"></span></p>
-        <p>Computer's ship: <span th:text="${computerShip?.title}"></span> attacks for <span th:text="${computerDiceRoll}"></span></p>
-        <p th:text="${result}"></p>
-    </div>
+</div>
+
 </body>
 </html>
