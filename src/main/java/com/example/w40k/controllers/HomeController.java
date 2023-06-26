@@ -2,14 +2,14 @@ package com.example.w40k.controllers;
 
 import com.example.w40k.models.Ships;
 import com.example.w40k.models.User;
+import com.example.w40k.repositories.UserRepository;
 import com.example.w40k.services.ShipService;
 import com.example.w40k.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,14 +18,21 @@ public class HomeController {
 
     private final ShipService shipService;
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public HomeController(ShipService shipService, UserService userService) {
+    public HomeController(ShipService shipService, UserService userService, UserRepository userRepository) {
         this.shipService = shipService;
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/")
+    public String registerForm() {
+        return "register";
+    }
+
+    @GetMapping("/login")
     public String loginForm() {
         return "login";
     }
@@ -45,6 +52,21 @@ public class HomeController {
         User user = new User(username, email, password);
         // Save the user to the database
         userService.save(user);
-        return "redirect:/index";
+        return "redirect:/login";
     }
+
+    @PostMapping("/login")
+    public String loginUser(@ModelAttribute User user, ModelMap model) {
+        // Check if the provided username, email, and password match a record in the database
+        User foundUser = userRepository.findByUsernameAndEmailAndPassword(
+                user.getUsername(), user.getEmail(), user.getPassword());
+
+        if (foundUser != null) {
+            return "redirect:/index";
+        } else {
+            model.addAttribute("message", "User not found");
+            return "/login";
+        }
+    }
+
 }

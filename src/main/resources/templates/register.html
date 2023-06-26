@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <title>Login Page</title>
-  <link rel="stylesheet" type="text/css" href="/login.css">
+  <link rel="stylesheet" type="text/css" href="register.css">
 </head>
 <body>
-<h2>Login page</h2>
-<form action="/login" method="post">
+<h2>Registration</h2>
+<form id="registerForm" method="POST" action="/register">
   <div>
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
@@ -21,10 +21,7 @@
     <input type="password" id="password" name="password" required>
   </div>
   <div>
-    <input type="submit" value="Login">
-  </div>
-  <div th:if="${message}" class="message">
-    <p th:text="${message}"></p>
+    <input type="submit" value="Register">
   </div>
 </form>
 </body>

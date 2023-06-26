@@ -1,14 +1,58 @@
-#shipLists{
+#shipLists {
     position: absolute;
-   margin-left: 50px;
+    margin-left: 50px;
+    /* Add more styles here if needed */
 }
-#result{
+
+#result {
     position: absolute;
     margin-left: 300px;
+    /* Add more styles here if needed */
 }
+
 #chaosShips {
     position: absolute;
     width: 200px;
     margin-left: 750px;
     margin-top: 20px;
+    /* Add more styles here if needed */
 }
+
+/* Additional CSS styles */
+
+/* Styling for ship list items */
+.ship-item {
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+}
+
+/* Styling for ship list headings */
+.ship-list-heading {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Styling for result section */
+#result {
+    padding: 10px;
+    background-color: #e6e6e6;
+    border-radius: 5px;
+    /* Add more styles here if needed */
+}
+
+/* Styling for chaos ships */
+#chaosShips {
+    /* Add more styles here if needed */
+}
+
+/* Styling for individual chaos ship */
+.chaos-ship {
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    /* Add more styles here if needed */
+}
+
