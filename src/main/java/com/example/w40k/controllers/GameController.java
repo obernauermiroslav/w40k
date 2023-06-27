@@ -48,6 +48,10 @@ public class GameController {
                 result = "Enemy ship is destroyed!";
                 shipService.delete(computerShip);
                 chaosShips.remove(computerShip);
+
+                if (chaosShips.isEmpty()) {
+                    result += " We have won.";
+                }
             } else if (userDiceRoll < computerDiceRoll) {
                 result = "Our ship is destroyed!";
                 shipService.delete(playerShip);
@@ -60,10 +64,11 @@ public class GameController {
                 result = "Our ship is damaged, we need to repair and attack again";
             }
         } else if (chaosShips.isEmpty()) {
-            result = "We have won.";
+            result = "Enemy ship is destroyed! We have won.";
         } else {
             result = "Invalid ship or ship list is empty.";
         }
+
 
         chaosShips = shipService.findChaos(); // Update the chaos ships list
 
