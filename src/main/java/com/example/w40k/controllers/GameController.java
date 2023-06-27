@@ -45,23 +45,67 @@ public class GameController {
             computerDiceRoll = rollDice();
 
             if (userDiceRoll > computerDiceRoll) {
-                result = "Enemy ship is destroyed!";
-                shipService.delete(computerShip);
-                chaosShips.remove(computerShip);
+                result = "Enemy ship is ";
+
+                if (computerShip.isDamaged()) {
+                    result += "destroyed!";
+                    shipService.delete(computerShip);
+                    chaosShips.remove(computerShip);
+                } else {
+                    result += "damaged!";
+                    computerShip.setDamaged(true);
+                    computerShip.setTitle(computerShip.getTitle() + " (damaged)");
+                    shipService.save(computerShip);
+                }
 
                 if (chaosShips.isEmpty()) {
                     result += " We have won.";
                 }
             } else if (userDiceRoll < computerDiceRoll) {
-                result = "Our ship is destroyed!";
-                shipService.delete(playerShip);
-                ships.remove(playerShip);
+                result = "Our ship is ";
+
+                if (playerShip.isDamaged()) {
+                    result += "destroyed!";
+                    shipService.delete(playerShip);
+                    ships.remove(playerShip);
+                } else {
+                    result += "damaged!";
+                    playerShip.setDamaged(true);
+                    playerShip.setTitle(playerShip.getTitle() + " (damaged)");
+                    shipService.save(playerShip);
+                }
 
                 if (ships.isEmpty()) {
                     result += " We have lost.";
                 }
             } else {
-                result = "Our ship is damaged, we need to repair and attack again";
+                result = "We have suffered heavy losses, but so does our enemy";
+
+                if (playerShip.isDamaged()) {
+                    result += " Our ship is destroyed!";
+                    shipService.delete(playerShip);
+                    ships.remove(playerShip);
+                } else {
+                    result += " Our ship is damaged!";
+                    playerShip.setDamaged(true);
+                    playerShip.setTitle(playerShip.getTitle() + " (damaged)");
+                    shipService.save(playerShip);
+                }
+
+                if (computerShip.isDamaged()) {
+                    result += " Enemy ship is destroyed!";
+                    shipService.delete(computerShip);
+                    chaosShips.remove(computerShip);
+                } else {
+                    result += " Enemy ship is damaged!";
+                    computerShip.setDamaged(true);
+                    computerShip.setTitle(computerShip.getTitle() + " (damaged)");
+                    shipService.save(computerShip);
+                }
+
+                if (ships.isEmpty()) {
+                    result += " We have lost.";
+                }
             }
         } else if (chaosShips.isEmpty()) {
             result = "Enemy ship is destroyed! We have won.";
@@ -69,8 +113,7 @@ public class GameController {
             result = "Invalid ship or ship list is empty.";
         }
 
-
-        chaosShips = shipService.findChaos(); // Update the chaos ships list
+        chaosShips = shipService.findChaos();
 
         model.addAttribute("result", result);
         model.addAttribute("playerShip", playerShip);
@@ -82,6 +125,9 @@ public class GameController {
 
         return "game";
     }
+
+
+
 
     private int rollDice() {
         return (int) (Math.random() * 6) + 1;
@@ -104,6 +150,6 @@ public class GameController {
             int randomIndex = (int) (Math.random() * numShips);
             return ships.get(randomIndex);
         }
-        return null; // Return null if no ships are found
+        return null;
     }
 }
