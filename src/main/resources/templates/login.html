@@ -27,5 +27,15 @@
     <p th:text="${message}"></p>
   </div>
 </form>
+<h2>Activation</h2>
+<form action="/activate" method="post">
+  <div>
+    <label for="activationCode">Activation Code:</label>
+    <input type="text" id="activationCode" name="activationCode" required>
+  </div>
+  <div>
+    <input type="submit" value="Activate">
+  </div>
+</form>
 </body>
 </html>

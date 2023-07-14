@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ship_battle_page</title>
+    <head>
+        <title>Ship Battle Game</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+            }
+
+            h1 {
+                margin-top: 20px;
+            }
+
+            #game-container {
+                display: flex;
+                justify-content: center;
+                margin-top: 50px;
+            }
+            #upgrade-options{
+                margin-top: 10px;
+                width: 200px;
+                height: 285px;
+                border: 1px solid black;
+            }
+            .ship {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 10px;
+                padding: 10px;
+                border: 1px solid black;
+                width: 350px;
+                background-color: lightgray;
+            }
+
+            .ship img {
+                width: 350px;
+                height: 150px;
+                padding-bottom: 15px;
+            }
+
+            .ship-info {
+                margin-bottom: 10px;
+            }
+
+            #result {
+                font-weight: bold;
+                margin-top: 20px;
+            }
+
+            button {
+                margin-bottom: 10px;
+            }
+        </style>
+
+    </head>
+<body>
+<h1>Ship Battle Game</h1>
+<button id="back" onclick="window.location.href='/index'">Back to main page</button>
+<br>
+<div id="game-container">
+    <div id="player-ship" class="ship" th:if="${playerShip != null}">
+        <img id="myShip" th:src="${playerShip.imagePath}" alt="Your Ship">
+        <div class="ship-info">
+            <span th:text="'Ship type: ' + ${playerShip.name}"></span>
+            <br>
+            <br>
+            <span th:text="'Health: ' + ${playerShip.health}"></span>
+            <br>
+            <br>
+            <span th:text="'Damage: ' + ${playerShip.attack}"></span>
+        </div>
+    </div>
+    <div id="upgrade-options" th:if="${playerShip != null}">
+        <h2>Game Options</h2>
+        <div>
+            <form method="post" action="/startGame">
+                <button id="startGame" type="submit">Attack</button>
+            </form>
+            <p>Skill Points: <span th:text="${playerShip.skillPoints}"></span></p>
+            <form action="/upgradeHealth" method="post">
+                <button type="submit">Emergency repair</button>
+            </form>
+            <form action="/upgradeAttack" method="post">
+                <button type="submit">Upgrade Attack</button>
+            </form>
+        </div>
+    </div>
+    <div id="enemy-ship" class="ship" th:if="${enemyShip != null}">
+        <img id="enemyShip" th:src="${enemyShip.imagePath}" alt="Enemy Ship">
+        <div class="ship-info">
+            <span th:text="'Ship type: ' + ${enemyShip.name}"></span>
+            <br>
+            <br>
+            <span th:text="'Health: ' + ${enemyShip.health}"></span>
+            <br>
+            <br>
+            <span th:text="'Damage: ' + ${enemyShip.attack}"></span>
+        </div>
+    </div>
+</div>
+
+
+<div id="result">
+    <span th:text="${result}"></span>
+    <br>
+    <span th:text="${playerAttackMessage}"></span>
+    <br>
+    <br>
+    <span th:text="${enemyAttackMessage}"></span>
+</div>
+</body>
+</html>
+
+
+

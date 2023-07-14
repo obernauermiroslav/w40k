@@ -1,5 +1,6 @@
 package com.example.w40k.controllers;
 
+import com.example.w40k.models.ShipFight;
 import com.example.w40k.models.Ships;
 import com.example.w40k.services.ShipService;
 import org.springframework.stereotype.Controller;
@@ -8,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class GameController {
@@ -135,7 +138,6 @@ public class GameController {
     }
 
 
-
     private int rollDice() {
         return (int) (Math.random() * 6) + 1;
     }
@@ -159,4 +161,124 @@ public class GameController {
         }
         return null;
     }
+
+    @Controller
+    public class GameControllerSecond {
+
+        private ShipFight playerShipFight;
+        private ShipFight currentEnemyShip;
+        private List<ShipFight> enemyShips;
+        private boolean gameStarted;
+
+        @GetMapping("/shipGame")
+        public String showGame(Model model) {
+            if (playerShipFight == null || !gameStarted) {
+                initializeGame();
+            }
+
+            model.addAttribute("playerShip", playerShipFight);
+            model.addAttribute("enemyShip", currentEnemyShip);
+            model.addAttribute("gameStarted", gameStarted);
+            model.addAttribute("playerAttackMessage", "");
+            model.addAttribute("enemyAttackMessage", "");
+            model.addAttribute("result", "");
+
+            return "Shipbattle";
+        }
+
+        @PostMapping("/startGame")
+        public String performAction(Model model, @RequestParam(value = "upgradeHealth", required = false) String upgradeHealth,
+                                    @RequestParam(value = "upgradeAttack", required = false) String upgradeAttack) {
+            if (playerShipFight != null && !playerShipFight.isDestroyed() && (currentEnemyShip != null || !enemyShips.isEmpty())) {
+                int playerAttack = playerShipFight.getAttack() + getRandomAttack();
+                currentEnemyShip.takeDamage(playerAttack);
+                model.addAttribute("playerAttackMessage", "Our ship attacks Enemy for " + playerAttack + " damage.");
+
+                if (!currentEnemyShip.isDestroyed()) {
+                    int enemyAttack = currentEnemyShip.getAttack() + getRandomAttack();
+                    playerShipFight.takeDamage(enemyAttack);
+                    model.addAttribute("enemyAttackMessage", "Enemy attacks Player for " + enemyAttack + " damage.");
+                }
+
+                if (playerShipFight.isDestroyed() && currentEnemyShip.isDestroyed()) {
+                    model.addAttribute("result", "It's a tie! Both ships are destroyed.");
+                } else if (playerShipFight.isDestroyed()) {
+                    model.addAttribute("result", "Our Ship is destroyed. Enemy Ship wins!");
+                    // Remove the player ship if it is destroyed
+                    playerShipFight = null;
+                } else if (currentEnemyShip.isDestroyed()) {
+                    playerShipFight.gainPower();
+                    model.addAttribute("result", "Enemy Ship is destroyed. Our Ship wins! Our Ship gains +3 attack, +25 max health, and ship is fully repaired.");
+                    playerShipFight.setSkillPoints(playerShipFight.getSkillPoints() + 2); // Increase skill points by +2
+
+                    // Check if there are more enemy ships
+                    if (!enemyShips.isEmpty()) {
+                        currentEnemyShip = enemyShips.remove(0); // Take the next enemy ship from the list
+                    } else {
+                        // All enemy ships are defeated, end the game
+                        currentEnemyShip = null;
+                    }
+                }
+
+                // Handle skill point upgrades
+                if (upgradeHealth != null && playerShipFight.getSkillPoints() > 0) {
+                    playerShipFight.upgradeHealth();
+                    playerShipFight.setSkillPoints(playerShipFight.getSkillPoints() - 1); // Decrease skill points by 1
+                }
+                if (upgradeAttack != null && playerShipFight.getSkillPoints() > 0) {
+                    playerShipFight.upgradeAttack();
+                    playerShipFight.setSkillPoints(playerShipFight.getSkillPoints() - 1); // Decrease skill points by 1
+                }
+            } else {
+                if (playerShipFight == null) {
+                    model.addAttribute("result", "Our Ship is destroyed. We have lost.");
+                } else {
+                    model.addAttribute("result", "Congratulations! We have crushed our enemy");
+                }
+            }
+
+            // Update model attributes with current ship data
+            model.addAttribute("playerShip", playerShipFight);
+            model.addAttribute("enemyShip", currentEnemyShip);
+
+            return "Shipbattle";
+        }
+
+
+        private void initializeGame() {
+            playerShipFight = new ShipFight("Imperial Frigate",300, 9, "/images/Frigate.jpg");
+            enemyShips = new ArrayList<>();
+            enemyShips.add(new ShipFight("Chaos Frigate",220, 10, "/images/chaos_frigate.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Light Cruiser",270, 11, "/images/chaos_light-cruiser.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Grand Cruiser",320, 14, "/images/chaos_cruiser.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Battleship",400, 17, "/images/chaos_battleship.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Gloriana", 500, 21, "/images/chaos_gloriana.jpeg"));
+            currentEnemyShip = enemyShips.remove(0);
+            gameStarted = true;
+        }
+
+        private int getRandomAttack() {
+            // Generate a random number between 5 and 10 (inclusive)
+            return (int) (Math.random() * 6) + 5;
+        }
+
+        @PostMapping("/upgradeHealth")
+        public String upgradeHealth(Model model) {
+            if (playerShipFight != null && playerShipFight.getSkillPoints() > 0) {
+                playerShipFight.upgradeHealth();
+            }
+            return "redirect:/shipGame";
+        }
+
+        @PostMapping("/upgradeAttack")
+        public String upgradeAttack(Model model) {
+            if (playerShipFight != null && playerShipFight.getSkillPoints() > 0) {
+                playerShipFight.upgradeAttack();
+            }
+            return "redirect:/shipGame";
+        }
+    }
 }
+
+
+

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,15 +12,22 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private String activationCode;
+    private Boolean isActive;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    public User() {
+    public User(){
+
     }
 
-    public User(String username,String email, String password) {
+    public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.role = Role.USER;
     }
+
 
     public Long getId() {
         return id;
@@ -45,6 +52,22 @@ public class User {
         this.username = username;
     }
 
+/*
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+    List<GrantedAuthority> authorities = new ArrayList<>();
+    authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
+    return authorities;
+}
+*/
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+
     public String getPassword() {
         return password;
     }
@@ -52,4 +75,20 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
 }
