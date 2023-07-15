@@ -69,10 +69,13 @@
             <span th:text="'Ship type: ' + ${playerShip.name}"></span>
             <br>
             <br>
-            <span th:text="'Health: ' + ${playerShip.health}"></span>
+            <span th:text="'Shields: ' + ${playerShip.shield}"></span>
             <br>
             <br>
             <span th:text="'Armor: ' + ${playerShip.armor}"></span>
+            <br>
+            <br>
+            <span th:text="'Health: ' + ${playerShip.health}"></span>
             <br>
             <br>
             <span th:text="'Damage: ' + ${playerShip.attack}"></span>
@@ -85,15 +88,17 @@
                 <button id="startGame" type="submit">Attack</button>
             </form>
             <p>Skill Points: <span th:text="${playerShip.skillPoints}"></span></p>
+            <form action="/upgradeShield" method="post">
+                <button type="submit">Upgrade Shields</button>
+            </form>
+            <form action="/upgradeArmor" method="post">
+                <button type="submit">Upgrade Armor</button>
+            </form>
             <form action="/upgradeHealth" method="post">
                 <button type="submit">Emergency repair</button>
             </form>
             <form action="/upgradeAttack" method="post">
                 <button type="submit">Upgrade Attack</button>
-            </form>
-            </form>
-            <form action="/upgradeArmor" method="post">
-                <button type="submit">Upgrade Armor</button>
             </form>
         </div>
     </div>
@@ -103,16 +108,20 @@
             <span th:text="'Ship type: ' + ${enemyShip.name}"></span>
             <br>
             <br>
-            <span th:text="'Health: ' + ${enemyShip.health}"></span>
+            <span th:text="'Shields: ' + ${enemyShip.shield}"></span>
             <br>
             <br>
             <span th:text="'Armor: ' + ${enemyShip.armor}"></span>
+            <br>
+            <br>
+            <span th:text="'Health: ' + ${enemyShip.health}"></span>
             <br>
             <br>
             <span th:text="'Damage: ' + ${enemyShip.attack}"></span>
         </div>
     </div>
 </div>
+
 
 
 <div id="result">

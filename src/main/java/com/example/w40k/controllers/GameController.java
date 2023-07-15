@@ -193,8 +193,11 @@ public class GameController {
                 int playerAttack = playerShipFight.getAttack();
                 int playerArmor = playerShipFight.getArmor();
                 int enemyArmor = currentEnemyShip.getArmor();
+                int enemyShields = currentEnemyShip.getShield();
+                int playerShields = playerShipFight.getShield();
 
-                if (enemyArmor == 0) {
+
+                if (enemyArmor == 0 || enemyShields > 0) {
                     // No armor reduction for enemy
                     playerAttack = playerAttack;
                 } else if (enemyArmor == 1) {
@@ -226,7 +229,7 @@ public class GameController {
 
                 if (!currentEnemyShip.isDestroyed()) {
                     int enemyAttack = currentEnemyShip.getAttack();
-                    if (playerArmor == 0) {
+                    if (playerArmor == 0 || playerShields > 0) {
                         // No armor reduction for player
                         enemyAttack = enemyAttack;
                     } else if (playerArmor == 1) {
@@ -303,18 +306,24 @@ public class GameController {
 
 
         private void initializeGame() {
-            playerShipFight = new ShipFight("Imperial Frigate", 300, 9, "/images/Frigate.jpg");
+            playerShipFight = new ShipFight("Imperial Frigate", 300, 10,  "/images/Frigate.jpg");
+            playerShipFight.setShield(120);
             enemyShips = new ArrayList<>();
             enemyShips.add(new ShipFight("Chaos Frigate", 230, 10, "/images/chaos_frigate.jpeg"));
             enemyShips.add(new ShipFight("Chaos Light Cruiser", 280, 12, "/images/chaos_light-cruiser.jpeg"));
             enemyShips.add(new ShipFight("Chaos Grand Cruiser", 330, 15, "/images/chaos_cruiser.jpeg"));
             enemyShips.add(new ShipFight("Chaos Battleship", 420, 18, "/images/chaos_battleship.jpeg"));
             enemyShips.add(new ShipFight("Chaos Gloriana", 530, 22, "/images/chaos_gloriana.jpeg"));
-            enemyShips.get(0).setArmor(1); // Chaos Frigate
-            enemyShips.get(1).setArmor(2); // Chaos Light Cruiser
-            enemyShips.get(2).setArmor(3); // Chaos Grand Cruiser
-            enemyShips.get(3).setArmor(4); // Chaos Battleship
-            enemyShips.get(4).setArmor(5); // Chaos Gloriana
+            enemyShips.get(0).setArmor(1);
+            enemyShips.get(0).setShield(100);// Chaos Frigate
+            enemyShips.get(1).setArmor(2);
+            enemyShips.get(1).setShield(150);// Chaos Light Cruiser
+            enemyShips.get(2).setArmor(3);
+            enemyShips.get(2).setShield(200);// Chaos Grand Cruiser
+            enemyShips.get(3).setArmor(4);
+            enemyShips.get(3).setShield(250);// Chaos Battleship
+            enemyShips.get(4).setArmor(5);
+            enemyShips.get(4).setShield(300);// Chaos Gloriana
             currentEnemyShip = enemyShips.remove(0);
             gameStarted = true;
         }
@@ -344,6 +353,13 @@ public class GameController {
         public String upgradeArmor(Model model) {
             if (playerShipFight != null && playerShipFight.getSkillPoints() > 0) {
                 playerShipFight.upgradeArmor();
+            }
+            return "redirect:/shipGame";
+        }
+        @PostMapping("/upgradeShield")
+        public String upgradeShield(Model model) {
+            if (playerShipFight != null && playerShipFight.getSkillPoints() > 0) {
+                playerShipFight.upgradeShield();
             }
             return "redirect:/shipGame";
         }

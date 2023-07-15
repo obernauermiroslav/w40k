@@ -6,6 +6,7 @@ public class ShipFight {
     private int attack;
     private int bonus;
     private int armor; // New field for armor
+    private int shield; // New field for shield
     private String imagePath; // New field for the image path
     private int skillPoints; // New field for skill points
 
@@ -19,8 +20,9 @@ public class ShipFight {
         this.attack = attack;
         this.bonus = 0; // Initialize the bonus to 0
         this.armor = 0; // Initialize the armor to 0
+        this.shield = 0; // Initialize the shield to 0
         this.imagePath = imagePath; // Set the image path
-        this.skillPoints = 7; // Set initial skill points to 2
+        this.skillPoints = 10; // Set initial skill points to 10
     }
 
     public void setName(String name) {
@@ -55,6 +57,14 @@ public class ShipFight {
         return armor;
     }
 
+    public void setShield(int shield) {
+        this.shield = shield;
+    }
+
+    public int getShield() {
+        return shield;
+    }
+
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
@@ -63,12 +73,23 @@ public class ShipFight {
         return imagePath;
     }
 
+
     public void takeDamage(int damage) {
         int totalDamage = damage;
+        if (shield > 0) {
+            if (totalDamage > shield) {
+                totalDamage -= shield;
+                shield = 0;
+            } else {
+                shield -= totalDamage;
+                totalDamage = 0;
+            }
+        }
         if (totalDamage > 0) {
             health -= totalDamage;
         }
     }
+
 
     public boolean isDestroyed() {
         return health <= 0;
@@ -76,19 +97,20 @@ public class ShipFight {
 
     public void gainPower() {
         attack += 3;
-        bonus += 30; // Increase the bonus
-        health = 300 + bonus; // Set the health based on the initial value of 100 and the bonus
+        bonus += 30;
+        health = 300 + bonus;
+        shield += 200;
 
         // Update the ship's image path based on the current image path
         if (imagePath.equals("/images/Frigate.jpg")) {
             imagePath = "/images/Light-Cruiser.jpg";
-            name = " Imperial Light Cruiser";
+            name = "Imperial Light Cruiser";
         } else if (imagePath.equals("/images/Light-Cruiser.jpg")) {
             imagePath = "/images/Cruiser.jpg";
-            name = " Imperial Grand Cruiser";
+            name = "Imperial Grand Cruiser";
         } else if (imagePath.equals("/images/Cruiser.jpg")) {
             imagePath = "/images/Battleship.jpeg";
-            name = " Imperial Battleship";
+            name = "Imperial Battleship";
         } else if (imagePath.equals("/images/Battleship.jpeg")) {
             imagePath = "/images/Gloriana.jpg";
             name = "Gloriana";
@@ -119,9 +141,17 @@ public class ShipFight {
             skillPoints -= 2;
         }
     }
+
     public void upgradeArmor() {
         if (skillPoints > 2) {
             armor += 1;
+            skillPoints -= 3;
+        }
+    }
+
+    public void upgradeShield() {
+        if (skillPoints > 2) {
+            shield += 100;
             skillPoints -= 3;
         }
     }
