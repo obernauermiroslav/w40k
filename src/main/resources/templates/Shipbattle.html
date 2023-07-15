@@ -87,18 +87,18 @@
             <form method="post" action="/startGame">
                 <button id="startGame" type="submit">Attack</button>
             </form>
-            <p>Skill Points: <span th:text="${playerShip.skillPoints}"></span></p>
+            <p>Skill Points(SP): <span th:text="${playerShip.skillPoints}"></span></p>
             <form action="/upgradeShield" method="post">
-                <button type="submit">Upgrade Shields</button>
+                <button type="submit">Upgrade Shields (3SP)</button>
             </form>
             <form action="/upgradeArmor" method="post">
-                <button type="submit">Upgrade Armor</button>
+                <button type="submit">Upgrade Armor (3SP)</button>
             </form>
             <form action="/upgradeHealth" method="post">
-                <button type="submit">Emergency repair</button>
+                <button type="submit">Emergency repair (1SP)</button>
             </form>
             <form action="/upgradeAttack" method="post">
-                <button type="submit">Upgrade Attack</button>
+                <button type="submit">Upgrade Attack (2SP)</button>
             </form>
         </div>
     </div>

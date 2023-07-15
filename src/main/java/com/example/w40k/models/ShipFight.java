@@ -99,7 +99,7 @@ public class ShipFight {
         attack += 3;
         bonus += 30;
         health = 300 + bonus;
-        shield += 200;
+        shield += 200 + bonus;
 
         // Update the ship's image path based on the current image path
         if (imagePath.equals("/images/Frigate.jpg")) {
