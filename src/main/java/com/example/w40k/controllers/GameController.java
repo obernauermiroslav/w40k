@@ -190,14 +190,71 @@ public class GameController {
         public String performAction(Model model, @RequestParam(value = "upgradeHealth", required = false) String upgradeHealth,
                                     @RequestParam(value = "upgradeAttack", required = false) String upgradeAttack) {
             if (playerShipFight != null && !playerShipFight.isDestroyed() && (currentEnemyShip != null || !enemyShips.isEmpty())) {
-                int playerAttack = playerShipFight.getAttack() + getRandomAttack();
-                currentEnemyShip.takeDamage(playerAttack);
-                model.addAttribute("playerAttackMessage", "Our ship attacks Enemy for " + playerAttack + " damage.");
+                int playerAttack = playerShipFight.getAttack();
+                int playerArmor = playerShipFight.getArmor();
+                int enemyArmor = currentEnemyShip.getArmor();
+
+                if (enemyArmor == 0) {
+                    // No armor reduction for enemy
+                    playerAttack = playerAttack;
+                } else if (enemyArmor == 1) {
+                    // Enemy armor reduces player's attack by 3
+                    playerAttack -= 3;
+                } else if (enemyArmor == 2) {
+                    // Enemy armor reduces player's attack by 6
+                    playerAttack -= 6;
+                }
+                else if (enemyArmor == 3) {
+                    // Player armor reduces enemy's attack by 6
+                    playerAttack -= 9;
+                }
+                else if (enemyArmor == 4) {
+                    // Player armor reduces enemy's attack by 6
+                    playerAttack -= 12;
+                }
+                else if (enemyArmor == 5) {
+                    // Player armor reduces enemy's attack by 6
+                    playerAttack -= 15;
+                }
+
+                if (playerAttack > 0) {
+                    currentEnemyShip.takeDamage(playerAttack);
+                    model.addAttribute("playerAttackMessage", "Our ship attacks Enemy for " + playerAttack + " damage.");
+                } else {
+                    model.addAttribute("playerAttackMessage", "Our ship attacks Enemy, but the attack is ineffective.");
+                }
 
                 if (!currentEnemyShip.isDestroyed()) {
-                    int enemyAttack = currentEnemyShip.getAttack() + getRandomAttack();
-                    playerShipFight.takeDamage(enemyAttack);
-                    model.addAttribute("enemyAttackMessage", "Enemy attacks Player for " + enemyAttack + " damage.");
+                    int enemyAttack = currentEnemyShip.getAttack();
+                    if (playerArmor == 0) {
+                        // No armor reduction for player
+                        enemyAttack = enemyAttack;
+                    } else if (playerArmor == 1) {
+                        // Player armor reduces enemy's attack by 3
+                        enemyAttack -= 3;
+                    } else if (playerArmor == 2) {
+                        // Player armor reduces enemy's attack by 6
+                        enemyAttack -= 6;
+                    }
+                    else if (playerArmor == 3) {
+                        // Player armor reduces enemy's attack by 6
+                        enemyAttack -= 9;
+                    }
+                    else if (playerArmor == 4) {
+                        // Player armor reduces enemy's attack by 6
+                        enemyAttack -= 12;
+                    }
+                    else if (playerArmor == 5) {
+                        // Player armor reduces enemy's attack by 6
+                        enemyAttack -= 15;
+                    }
+
+                    if (enemyAttack > 0) {
+                        playerShipFight.takeDamage(enemyAttack);
+                        model.addAttribute("enemyAttackMessage", "Enemy attacks our ship for " + enemyAttack + " damage.");
+                    } else {
+                        model.addAttribute("enemyAttackMessage", "Enemy attacks our ship, but the attack is ineffective.");
+                    }
                 }
 
                 if (playerShipFight.isDestroyed() && currentEnemyShip.isDestroyed()) {
@@ -208,7 +265,7 @@ public class GameController {
                     playerShipFight = null;
                 } else if (currentEnemyShip.isDestroyed()) {
                     playerShipFight.gainPower();
-                    model.addAttribute("result", "Enemy Ship is destroyed. Our Ship wins! Our Ship gains +3 attack, +25 max health, and ship is fully repaired.");
+                    model.addAttribute("result", "Enemy Ship is destroyed. Our Ship wins! Our Ship gains +3 attack, +30 max health, and ship is fully repaired.");
                     playerShipFight.setSkillPoints(playerShipFight.getSkillPoints() + 2); // Increase skill points by +2
 
                     // Check if there are more enemy ships
@@ -246,13 +303,18 @@ public class GameController {
 
 
         private void initializeGame() {
-            playerShipFight = new ShipFight("Imperial Frigate",300, 9, "/images/Frigate.jpg");
+            playerShipFight = new ShipFight("Imperial Frigate", 300, 9, "/images/Frigate.jpg");
             enemyShips = new ArrayList<>();
-            enemyShips.add(new ShipFight("Chaos Frigate",220, 10, "/images/chaos_frigate.jpeg"));
-            enemyShips.add(new ShipFight("Chaos Light Cruiser",270, 11, "/images/chaos_light-cruiser.jpeg"));
-            enemyShips.add(new ShipFight("Chaos Grand Cruiser",320, 14, "/images/chaos_cruiser.jpeg"));
-            enemyShips.add(new ShipFight("Chaos Battleship",400, 17, "/images/chaos_battleship.jpeg"));
-            enemyShips.add(new ShipFight("Chaos Gloriana", 500, 21, "/images/chaos_gloriana.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Frigate", 230, 10, "/images/chaos_frigate.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Light Cruiser", 280, 12, "/images/chaos_light-cruiser.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Grand Cruiser", 330, 15, "/images/chaos_cruiser.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Battleship", 420, 18, "/images/chaos_battleship.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Gloriana", 530, 22, "/images/chaos_gloriana.jpeg"));
+            enemyShips.get(0).setArmor(1); // Chaos Frigate
+            enemyShips.get(1).setArmor(2); // Chaos Light Cruiser
+            enemyShips.get(2).setArmor(3); // Chaos Grand Cruiser
+            enemyShips.get(3).setArmor(4); // Chaos Battleship
+            enemyShips.get(4).setArmor(5); // Chaos Gloriana
             currentEnemyShip = enemyShips.remove(0);
             gameStarted = true;
         }
@@ -277,6 +339,15 @@ public class GameController {
             }
             return "redirect:/shipGame";
         }
+
+        @PostMapping("/upgradeArmor")
+        public String upgradeArmor(Model model) {
+            if (playerShipFight != null && playerShipFight.getSkillPoints() > 0) {
+                playerShipFight.upgradeArmor();
+            }
+            return "redirect:/shipGame";
+        }
+
     }
 }
 

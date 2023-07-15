@@ -18,12 +18,12 @@
             #game-container {
                 display: flex;
                 justify-content: center;
-                margin-top: 50px;
+                margin-top: 30px;
             }
             #upgrade-options{
                 margin-top: 10px;
                 width: 200px;
-                height: 285px;
+                height: 320px;
                 border: 1px solid black;
             }
             .ship {
@@ -49,11 +49,11 @@
 
             #result {
                 font-weight: bold;
-                margin-top: 20px;
+                margin-top: 7px;
             }
 
             button {
-                margin-bottom: 10px;
+                margin-bottom: 5px;
             }
         </style>
 
@@ -72,6 +72,9 @@
             <span th:text="'Health: ' + ${playerShip.health}"></span>
             <br>
             <br>
+            <span th:text="'Armor: ' + ${playerShip.armor}"></span>
+            <br>
+            <br>
             <span th:text="'Damage: ' + ${playerShip.attack}"></span>
         </div>
     </div>
@@ -88,6 +91,10 @@
             <form action="/upgradeAttack" method="post">
                 <button type="submit">Upgrade Attack</button>
             </form>
+            </form>
+            <form action="/upgradeArmor" method="post">
+                <button type="submit">Upgrade Armor</button>
+            </form>
         </div>
     </div>
     <div id="enemy-ship" class="ship" th:if="${enemyShip != null}">
@@ -99,6 +106,9 @@
             <span th:text="'Health: ' + ${enemyShip.health}"></span>
             <br>
             <br>
+            <span th:text="'Armor: ' + ${enemyShip.armor}"></span>
+            <br>
+            <br>
             <span th:text="'Damage: ' + ${enemyShip.attack}"></span>
         </div>
     </div>
@@ -108,11 +118,13 @@
 <div id="result">
     <span th:text="${result}"></span>
     <br>
+    <br>
     <span th:text="${playerAttackMessage}"></span>
     <br>
     <br>
     <span th:text="${enemyAttackMessage}"></span>
 </div>
+
 </body>
 </html>
 
