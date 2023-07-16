@@ -144,7 +144,7 @@ public class ShipFight {
 
     public void upgradeArmor() {
         if (skillPoints > 2) {
-            armor += 1;
+            armor += 3;
             skillPoints -= 3;
         }
     }

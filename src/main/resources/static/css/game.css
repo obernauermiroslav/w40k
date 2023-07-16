@@ -10,14 +10,14 @@ margin-left:55px;
 }
 
 #shipLists{
-    margin-left: 55px;
+    margin-left: 15px;
 }
 
 #shipLists,
 #chaosShips,
 #result {
     margin-top: 30px;
-    margin-right: 25px;
+    margin-right: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #fff;
     padding: 15px;
