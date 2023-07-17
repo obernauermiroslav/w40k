@@ -5,6 +5,7 @@ import com.example.w40k.models.Ships;
 import com.example.w40k.services.ShipService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -206,16 +207,13 @@ public class GameController {
                 } else if (enemyArmor == 6) {
                     // Enemy armor reduces player's attack by 6
                     playerAttack -= 6;
-                }
-                else if (enemyArmor == 9) {
+                } else if (enemyArmor == 9) {
                     // Player armor reduces enemy's attack by 6
                     playerAttack -= 9;
-                }
-                else if (enemyArmor == 12) {
+                } else if (enemyArmor == 12) {
                     // Player armor reduces enemy's attack by 6
                     playerAttack -= 12;
-                }
-                else if (enemyArmor == 15) {
+                } else if (enemyArmor == 15) {
                     // Player armor reduces enemy's attack by 6
                     playerAttack -= 15;
                 }
@@ -225,8 +223,8 @@ public class GameController {
                     if (enemyShields > 0) {
                         model.addAttribute("playerAttackMessage", "Our ship attacks Enemy for " + playerAttack + " damage.");
                     } else {
-                    model.addAttribute("playerAttackMessage", "Our ship attacks Enemy for " + playerAttack + " damage." +  "(" + playerShipFight.getAttack() + " - " + enemyArmor + ")"
-                    );
+                        model.addAttribute("playerAttackMessage", "Our ship attacks Enemy for " + playerAttack + " damage." + "(" + playerShipFight.getAttack() + " - " + enemyArmor + ")"
+                        );
                     }
                 } else {
                     model.addAttribute("playerAttackMessage", "Our ship attacks Enemy, but the attack is ineffective.");
@@ -243,16 +241,13 @@ public class GameController {
                     } else if (playerArmor == 6) {
                         // Player armor reduces enemy's attack by 6
                         enemyAttack -= 6;
-                    }
-                    else if (playerArmor == 9) {
+                    } else if (playerArmor == 9) {
                         // Player armor reduces enemy's attack by 6
                         enemyAttack -= 9;
-                    }
-                    else if (playerArmor == 12) {
+                    } else if (playerArmor == 12) {
                         // Player armor reduces enemy's attack by 6
                         enemyAttack -= 12;
-                    }
-                    else if (playerArmor == 15) {
+                    } else if (playerArmor == 15) {
                         // Player armor reduces enemy's attack by 6
                         enemyAttack -= 15;
                     }
@@ -262,8 +257,8 @@ public class GameController {
                         if (playerShields > 0) {
                             model.addAttribute("enemyAttackMessage", "Enemy attacks our ship for " + enemyAttack + " damage.");
                         } else {
-                        model.addAttribute("enemyAttackMessage", "Enemy attacks our ship for " + enemyAttack + " damage." +  "(" + currentEnemyShip.getAttack() + " - " + playerArmor + ")"
-                        );
+                            model.addAttribute("enemyAttackMessage", "Enemy attacks our ship for " + enemyAttack + " damage." + "(" + currentEnemyShip.getAttack() + " - " + playerArmor + ")"
+                            );
                         }
                     } else {
                         model.addAttribute("enemyAttackMessage", "Enemy attacks our ship, but the attack is ineffective.");
@@ -313,8 +308,9 @@ public class GameController {
 
             return "Shipbattle";
         }
+
         private void initializeGame() {
-            playerShipFight = new ShipFight("Imperial Frigate", 300, 10,  "/images/Frigate.jpg");
+            playerShipFight = new ShipFight("Imperial Frigate", 300, 10, "/images/Frigate.jpg");
             playerShipFight.setShield(120);
             enemyShips = new ArrayList<>();
             enemyShips.add(new ShipFight("Chaos Frigate", 230, 10, "/images/chaos_frigate.jpeg"));
@@ -345,33 +341,69 @@ public class GameController {
         public String upgradeHealth(Model model) {
             if (playerShipFight != null && playerShipFight.getSkillPoints() > 0) {
                 playerShipFight.upgradeHealth();
+            } else {
+                model.addAttribute("errorMessage", "Not enough skill points.");
+                model.addAttribute("playerShip", playerShipFight);
+                model.addAttribute("enemyShip", currentEnemyShip);
+                model.addAttribute("gameStarted", gameStarted);
+                model.addAttribute("playerAttackMessage", "");
+                model.addAttribute("enemyAttackMessage", "");
+                model.addAttribute("result", "");
+                return "Shipbattle";
             }
             return "redirect:/shipGame";
         }
 
         @PostMapping("/upgradeAttack")
         public String upgradeAttack(Model model) {
-            if (playerShipFight != null && playerShipFight.getSkillPoints() > 0) {
+            if (playerShipFight != null && playerShipFight.getSkillPoints() > 1) {
                 playerShipFight.upgradeAttack();
+            } else {
+                model.addAttribute("errorMessage", "Not enough skill points.");
+                model.addAttribute("playerShip", playerShipFight);
+                model.addAttribute("enemyShip", currentEnemyShip);
+                model.addAttribute("gameStarted", gameStarted);
+                model.addAttribute("playerAttackMessage", "");
+                model.addAttribute("enemyAttackMessage", "");
+                model.addAttribute("result", "");
+                return "Shipbattle";
             }
             return "redirect:/shipGame";
         }
 
         @PostMapping("/upgradeArmor")
         public String upgradeArmor(Model model) {
-            if (playerShipFight != null && playerShipFight.getSkillPoints() > 0) {
+            if (playerShipFight != null && playerShipFight.getSkillPoints() > 2) {
                 playerShipFight.upgradeArmor();
+            } else {
+                model.addAttribute("errorMessage", "Not enough skill points.");
+                model.addAttribute("playerShip", playerShipFight);
+                model.addAttribute("enemyShip", currentEnemyShip);
+                model.addAttribute("gameStarted", gameStarted);
+                model.addAttribute("playerAttackMessage", "");
+                model.addAttribute("enemyAttackMessage", "");
+                model.addAttribute("result", "");
+                return "Shipbattle";
             }
             return "redirect:/shipGame";
         }
+
         @PostMapping("/upgradeShield")
         public String upgradeShield(Model model) {
-            if (playerShipFight != null && playerShipFight.getSkillPoints() > 0) {
+            if (playerShipFight != null && playerShipFight.getSkillPoints() > 2) {
                 playerShipFight.upgradeShield();
+            } else {
+                model.addAttribute("errorMessage", "Not enough skill points.");
+                model.addAttribute("playerShip", playerShipFight);
+                model.addAttribute("enemyShip", currentEnemyShip);
+                model.addAttribute("gameStarted", gameStarted);
+                model.addAttribute("playerAttackMessage", "");
+                model.addAttribute("enemyAttackMessage", "");
+                model.addAttribute("result", "");
+                return "Shipbattle";
             }
             return "redirect:/shipGame";
         }
 
     }
 }
-

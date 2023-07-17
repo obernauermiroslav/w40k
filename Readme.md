@@ -5,4 +5,5 @@ Still in progress, will continue with more features
 Launch with : W40kApplication
 
 docker build -t w40k-image .
+
 docker run -p 8080:8080 w40k-image
