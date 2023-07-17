@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        p {
+            border: 1px solid black;
+            width: 550px;
+            margin: 0 auto;
+            padding: 15px;
+            background-color: #f8f8f8;
+            color: #333;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        p:hover {
+            background-color: #eaeaea;
+        }
+
+        p::first-letter {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+<button id="back" onclick="window.location.href='/game'">Back to Game</button>
+<p>
+    How to play the first game?<br>
+
+    In this game 2 battle fleets fight against each other.<br>
+    You play with the Imperial battle fleet against The Chaos battle fleet.<br>
+    You can choose one of your ships, then your enemy will choose one random ship and both of you will roll with virtual dice.<br>
+    The ship that rolls higher number wins, and the second ship is damaged.<br>
+    If damaged ship rolls again lower number, it is destroyed.<br>
+    If both ships roll the same number, they are both damaged and if any of it is already damaged, it is destroyed.<br>
+    He who has the last ship standing wins.
+    You can also add or delete ships from your fleet on the main page.
+</p>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        p {
+            border: 1px solid black;
+            width: 650px;
+            margin: 0 auto;
+            padding: 15px;
+            background-color: #f8f8f8;
+            color: #333;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        p:hover {
+            background-color: #eaeaea;
+        }
+
+        p::first-letter {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+<button id="back" onclick="window.location.href='/shipGame'">Back to Game</button>
+<p>
+  How to play the second game?<br>
+
+    In this game you fight with your ship against enemy ships.<br>
+    Your ship has shields, armor, health and attack attributes.<br>
+    If you press attack button, both ships will attack each other, each attack will decrease health or shields.<br>
+    If you want to destroy enemy ship, first you have to decrease shields to 0, then you must decrease health to 0.<br>
+    When damaging shields, you cause full damage with your ship.<br>
+    When damaging health, your damage is decreased by armor value.<br>
+    Each time you destroy enemy ship, your ship will be upgraded. <br>
+    Your attributes will be upgraded, and picture of your ship will also change.<br>
+    But enemy ship will also be upgraded, so each time you will face stronger enemy ship.<br>
+    There are also skill points, that can be used for upgrading your ship.<br>
+    You can use them, if you have enough points to purchase an upgrade.<br>
+    You start with some skill points, and for each destroyed ship you will gain some more.<br>
+    If you manage to destroy all enemy ships, you have won.
+
+</p>
+</body>
+</html>

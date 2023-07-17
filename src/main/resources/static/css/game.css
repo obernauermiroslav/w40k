@@ -1,32 +1,27 @@
 #game {
     display: flex;
     justify-content: space-between;
-    width: 1200px;
+    width: 1000px;
 }
 
-#back{
-position: absolute;
-margin-left:55px;
-}
-
-#shipLists{
-    margin-left: 15px;
+#buttons {
+    display: flex;
 }
 
 #shipLists,
 #chaosShips,
 #result {
-    margin-top: 30px;
+    margin-top: 15px; /* Adjust the margin-top value as needed */
     margin-right: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    padding: 15px;
+    padding: 10px; /* Adjust the padding value as needed */
     border-radius: 5px;
-    border:1px solid black;
+    border: 1px solid black;
 }
 
-#result{
-    width: 250px
+#result {
+    width: 250px;
 }
 
 #shipLists:last-child,
@@ -34,3 +29,5 @@ margin-left:55px;
 #result:last-child {
     margin-right: 0;
 }
+
+

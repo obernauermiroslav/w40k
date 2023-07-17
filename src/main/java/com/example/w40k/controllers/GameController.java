@@ -278,7 +278,7 @@ public class GameController {
                     playerShipFight = null;
                 } else if (currentEnemyShip.isDestroyed()) {
                     playerShipFight.gainPower();
-                    model.addAttribute("result", "Enemy Ship is destroyed. Our Ship wins and is upgraded - full repair, gains +3 attack, +30 max health and has stronger shields.");
+                    model.addAttribute("result", "Enemy Ship is destroyed. Our Ship wins and is upgraded : full repair, +3 attack, +30 max health and stronger shields.");
                     playerShipFight.setSkillPoints(playerShipFight.getSkillPoints() + 2); // Increase skill points by +2
 
                     // Check if there are more enemy ships
@@ -313,8 +313,6 @@ public class GameController {
 
             return "Shipbattle";
         }
-
-
         private void initializeGame() {
             playerShipFight = new ShipFight("Imperial Frigate", 300, 10,  "/images/Frigate.jpg");
             playerShipFight.setShield(120);
@@ -326,7 +324,7 @@ public class GameController {
             enemyShips.add(new ShipFight("Chaos Gloriana", 530, 22, "/images/chaos_gloriana.jpeg"));
             enemyShips.get(0).setArmor(3);
             enemyShips.get(0).setShield(100);// Chaos Frigate
-            enemyShips.get(1).setArmor(5);
+            enemyShips.get(1).setArmor(6);
             enemyShips.get(1).setShield(150);// Chaos Light Cruiser
             enemyShips.get(2).setArmor(9);
             enemyShips.get(2).setShield(200);// Chaos Grand Cruiser
@@ -376,6 +374,4 @@ public class GameController {
 
     }
 }
-
-
 

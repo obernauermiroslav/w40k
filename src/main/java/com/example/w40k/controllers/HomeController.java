@@ -19,7 +19,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,17 +59,15 @@ public class HomeController {
                            @RequestParam("email") String email,
                            @RequestParam("password") String password,
                            RedirectAttributes redirectAttributes) {
-        // Create a new user object
+
         User user = new User(username, email, password);
 
-        // Set activation code and other properties
         String activationCode = GenerateActivationCode.generate(48);
         user.setActivationCode(activationCode);
         user.setIsActive(false);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // Save the user to the database
         User savedUser = userService.save(user);
 /*
         // Send activation email
@@ -144,5 +141,16 @@ public class HomeController {
             return "login";
         }
     }
-
+    @GetMapping("/FirstGame")
+    public String firstGame() {
+        return "FirstGame";
+    }
+    @GetMapping("/SecondGame")
+    public String secondGame() {
+        return "SecondGame";
+    }
+    @GetMapping("/readme")
+    public String readme() {
+        return "readme";
+    }
 }
