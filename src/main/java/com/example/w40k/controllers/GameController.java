@@ -405,5 +405,92 @@ public class GameController {
             return "redirect:/shipGame";
         }
 
+
+        @PostMapping("/defend")
+        public String defend(Model model) {
+            if (playerShipFight != null && !playerShipFight.isDestroyed() && (currentEnemyShip != null || !enemyShips.isEmpty())) {
+                playerShipFight.defend();
+
+                if (!currentEnemyShip.isDestroyed()) {
+                    int enemyAttack = currentEnemyShip.getAttack();
+                    int playerArmor = playerShipFight.getArmor();
+                    int playerShields = playerShipFight.getShield();
+
+                    if (playerShields > 0) {
+                        enemyAttack = enemyAttack / 2; // Reduce damage by 50% if player has shields
+                    } else {
+                        enemyAttack = (enemyAttack - playerArmor) / 2; // Reduce damage by 50% considering player's armor
+                    }
+
+                    if (enemyAttack > 0) {
+                        playerShipFight.takeDamage(enemyAttack);
+                        if (playerShields > 0) {
+                            model.addAttribute("enemyAttackMessage", "When defending, our ship will receive only 50% damage.Enemy attacks our ship for " + enemyAttack + " damage: damage/2");
+                        } else {
+                            model.addAttribute("enemyAttackMessage", "When defending, our ship will receive only 50% damage.Enemy attacks our ship for " + enemyAttack + " damage: (damage-armor)/2");
+                        }
+                    } else {
+                        model.addAttribute("enemyAttackMessage", "Enemy attacks our ship, but the attack is ineffective.");
+                    }
+                }
+
+                if (!playerShipFight.isDestroyed() && !currentEnemyShip.isDestroyed()) {
+                    int playerAttack = playerShipFight.getAttack();
+                    int enemyArmor = currentEnemyShip.getArmor();
+                    int enemyShields = currentEnemyShip.getShield();
+
+                    if (enemyShields > 0) {
+                        playerAttack = (int) Math.round(playerAttack * 0.3); // 30% of player's attack as enemy's damage when enemy has shields
+                    } else {
+                        playerAttack = (int) Math.round((playerAttack - enemyArmor) * 0.3); // 30% of player's attack considering enemy's armor
+                    }
+
+                    if (playerAttack > 0) {
+                        currentEnemyShip.takeDamage(playerAttack);
+                        if (enemyShields > 0) {
+                            model.addAttribute("playerAttackMessage", " Our ship is defending, its attack is reduced by 70%, deals only " + playerAttack + " damage: damage*0.3");
+                        } else {
+                            model.addAttribute("playerAttackMessage", "Our ship is defending, its attack is reduced by 70%, deals only " + playerAttack + " damage: (damage-armor)*0.3");
+                        }
+                    } else {
+                        model.addAttribute("playerAttackMessage", "Our ship counterattacks, but the attack is ineffective.");
+                    }
+                }
+
+                if (playerShipFight.isDestroyed() && currentEnemyShip.isDestroyed()) {
+                    model.addAttribute("result", "It's a tie! Both ships are destroyed.");
+                } else if (playerShipFight.isDestroyed()) {
+                    model.addAttribute("result", "Our Ship is destroyed. Enemy Ship wins!");
+                    // Remove the player ship if it is destroyed
+                    playerShipFight = null;
+                } else if (currentEnemyShip.isDestroyed()) {
+                    playerShipFight.gainPower();
+                    model.addAttribute("result", "Enemy Ship is destroyed. Our Ship wins and is upgraded: full repair, +3 attack, +30 max health, and stronger shields.");
+                    playerShipFight.setSkillPoints(playerShipFight.getSkillPoints() + 2); // Increase skill points by +2
+
+                    // Check if there are more enemy ships
+                    if (!enemyShips.isEmpty()) {
+                        currentEnemyShip = enemyShips.remove(0); // Take the next enemy ship from the list
+                    } else {
+                        // All enemy ships are defeated, end the game
+                        currentEnemyShip = null;
+                    }
+                }
+            } else {
+                if (playerShipFight == null) {
+                    model.addAttribute("result", "Our Ship is destroyed. We have lost.");
+                } else {
+                    model.addAttribute("result", "Congratulations! We have crushed our enemy.");
+                }
+            }
+
+            // Update model attributes with current ship data
+            model.addAttribute("playerShip", playerShipFight);
+            model.addAttribute("enemyShip", currentEnemyShip);
+
+            return "Shipbattle";
+        }
+
+
     }
 }

@@ -10,6 +10,8 @@ public class ShipFight {
     private String imagePath; // New field for the image path
     private int skillPoints; // New field for skill points
 
+    private int damageReduction;
+
     public ShipFight() {
         // Empty constructor
     }
@@ -72,6 +74,14 @@ public class ShipFight {
     public String getImagePath() {
         return imagePath;
     }
+    public void setDamageReduction(int damageReduction) {
+        this.damageReduction = damageReduction;
+    }
+
+    public int getDamageReduction() {
+        return damageReduction;
+    }
+
 
 
     public void takeDamage(int damage) {
@@ -154,6 +164,18 @@ public class ShipFight {
             shield += 100;
             skillPoints -= 3;
         }
+    }
+
+    public void defend() {
+        int damageReduction = getAttack() / 2; // Reduce damage by 50%
+        setDamageReduction(damageReduction);
+    }
+    public int calculateDamage(int damage) {
+        int damageAfterReduction = damage - getDamageReduction();
+        if (damageAfterReduction < 0) {
+            damageAfterReduction = 0; // Ensure damage cannot be negative
+        }
+        return damageAfterReduction;
     }
 }
 

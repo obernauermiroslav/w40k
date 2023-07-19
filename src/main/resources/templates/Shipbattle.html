@@ -81,8 +81,12 @@
         <h2>Game Options</h2>
         <div>
             <form method="post" action="/startGame">
-                <button id="startGame" type="submit">Attack</button>
+                <button id="startGame" type="submit">All hands, open fire! </button>
             </form>
+            <form action="/defend" method="post">
+                <button type="submit">Brace for impact!</button>
+            </form>
+
             <p>Skill Points(SP): <span th:text="${playerShip.skillPoints}"></span></p>
             <form action="/upgradeShield" method="post">
                 <button type="submit">Upgrade Shields (3SP)</button>
@@ -94,7 +98,7 @@
                 <button type="submit">Emergency repair (1SP)</button>
             </form>
             <form action="/upgradeAttack" method="post">
-                <button type="submit">Upgrade Attack (2SP)</button>
+                <button type="submit">Upgrade Damage (2SP)</button>
             </form>
         </div>
         <br>
