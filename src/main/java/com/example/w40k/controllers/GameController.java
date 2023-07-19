@@ -273,8 +273,8 @@ public class GameController {
                     playerShipFight = null;
                 } else if (currentEnemyShip.isDestroyed()) {
                     playerShipFight.gainPower();
-                    model.addAttribute("result", "Enemy Ship is destroyed. Our Ship wins and is upgraded : full repair, +3 attack, +30 max health and stronger shields.");
-                    playerShipFight.setSkillPoints(playerShipFight.getSkillPoints() + 2); // Increase skill points by +2
+                    model.addAttribute("result", "Enemy Ship is destroyed. Our Ship wins and is upgraded : full repair, +3 attack, + 3 skill points, +30 max health and stronger shields.");
+                    playerShipFight.setSkillPoints(playerShipFight.getSkillPoints() + 3); // Increase skill points by
 
                     // Check if there are more enemy ships
                     if (!enemyShips.isEmpty()) {
@@ -491,6 +491,46 @@ public class GameController {
             return "Shipbattle";
         }
 
+        @PostMapping("/sabotage")
+        public String sabotage(Model model) {
+            if (playerShipFight != null && playerShipFight.getSkillPoints() > 1  && !playerShipFight.isDestroyed() && (currentEnemyShip != null || !enemyShips.isEmpty())) {
+                int enemyShields = currentEnemyShip.getShield();
+                if (enemyShields <= 0) {
+                    // Calculate the chance of damaging armor or decreasing damage
+                    boolean isArmorDamaged = Math.random() < 0.5; // 50% chance of damaging armor
+                    boolean isDamageDecreased = !isArmorDamaged; // 50% chance of decreasing damage
 
+                    if (isArmorDamaged) {
+                        int enemyArmor = currentEnemyShip.getArmor();
+                        if (enemyArmor > 2) {
+                            currentEnemyShip.setArmor(enemyArmor - 3);
+                            playerShipFight.setSkillPoints(playerShipFight.getSkillPoints() - 2);
+                            model.addAttribute("sabotageMessage", "Sabotage successful! Enemy ship's armor has been damaged (armor - 3)");
+                        } else {
+                            model.addAttribute("sabotageMessage", "Sabotage unsuccessful. Enemy ship's armor is already at its minimum.");
+                        }
+                    } else if (isDamageDecreased) {
+                        int enemyDamage = currentEnemyShip.getAttack();
+                        if (enemyDamage > 2) {
+                            currentEnemyShip.setAttack(enemyDamage - 3);
+                            playerShipFight.setSkillPoints(playerShipFight.getSkillPoints() - 2);
+                            model.addAttribute("sabotageMessage", "Sabotage successful! Enemy ship's damage has been decreased (damage - 3)");
+                        } else {
+                            model.addAttribute("sabotageMessage", "Sabotage unsuccessful. Enemy ship's damage is already at its minimum.");
+                        }
+                    }
+                } else {
+                    model.addAttribute("sabotageMessage", "Sabotage cannot be used. Enemy ship's shields are still active.");
+                }
+            } else {
+                model.addAttribute("sabotageMessage", "Not enough skill points.");
+            }
+
+            // Update model attributes with current ship data
+            model.addAttribute("playerShip", playerShipFight);
+            model.addAttribute("enemyShip", currentEnemyShip);
+
+            return "Shipbattle";
+        }
     }
 }

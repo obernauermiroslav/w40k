@@ -100,6 +100,9 @@
             <form action="/upgradeAttack" method="post">
                 <button type="submit">Upgrade Damage (2SP)</button>
             </form>
+            <form action="/sabotage" method="post">
+                <button type="submit">Sabotage (2SP)</button>
+            </form>
         </div>
         <br>
         <div class="error-message" th:if="${errorMessage}">
@@ -129,6 +132,8 @@
 </div>
 <div id="result">
     <span th:text="${result}"></span>
+    <br>
+    <span th:text="${sabotageMessage}"></span>
     <br>
     <span th:text="${playerAttackMessage}"></span>
     <br>
