@@ -139,7 +139,7 @@ public class ShipFight {
 
     public void upgradeHealth() {
         if (skillPoints > 0) {
-            health += 30;
+            health += 35;
             skillPoints -= 1;
         }
     }
@@ -160,7 +160,7 @@ public class ShipFight {
 
     public void upgradeShield() {
         if (skillPoints > 2) {
-            shield += 100;
+            shield += 90;
             skillPoints -= 3;
         }
     }

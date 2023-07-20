@@ -217,9 +217,13 @@ public class GameController {
 
                     playerAttack -= 15;
                 }
-                else if (enemyArmor == 20) {
+                else if (enemyArmor == 18) {
 
-                    playerAttack -= 20;
+                    playerAttack -= 18;
+                }
+                else if (enemyArmor == 21) {
+
+                    playerAttack -= 21;
                 }
 
                 if (playerAttack > 0) {
@@ -346,7 +350,7 @@ public class GameController {
             enemyShips.get(3).setShield(255);// Chaos Grand Cruiser
             enemyShips.get(4).setArmor(15);
             enemyShips.get(4).setShield(320);// Chaos Battleship
-            enemyShips.get(5).setArmor(20);
+            enemyShips.get(5).setArmor(21);
             enemyShips.get(5).setShield(360);// Chaos Gloriana
             currentEnemyShip = enemyShips.remove(0);
             gameStarted = true;
@@ -460,17 +464,17 @@ public class GameController {
                     int enemyShields = currentEnemyShip.getShield();
 
                     if (enemyShields > 0) {
-                        playerAttack = (int) Math.round(playerAttack * 0.4); // 40% of player's attack as enemy's damage when enemy has shields
+                        playerAttack = (int) Math.round(playerAttack * 0.6); // 40% of player's attack as enemy's damage when enemy has shields
                     } else {
-                        playerAttack = (int) Math.round((playerAttack - enemyArmor) * 0.4); // 40% of player's attack considering enemy's armor
+                        playerAttack = (int) Math.round((playerAttack - enemyArmor) * 0.6); // 40% of player's attack considering enemy's armor
                     }
 
                     if (playerAttack > 0) {
                         currentEnemyShip.takeDamage(playerAttack);
                         if (enemyShields > 0) {
-                            model.addAttribute("playerAttackMessage", " Our ship is defending, its attack is reduced by 60%, deals only " + playerAttack + " damage: damage*0.4");
+                            model.addAttribute("playerAttackMessage", " Our ship is defending, its attack is reduced by 40%, deals only " + playerAttack + " damage: damage*0.6");
                         } else {
-                            model.addAttribute("playerAttackMessage", "Our ship is defending, its attack is reduced by 60%, deals only " + playerAttack + " damage: (damage-armor)*0.4");
+                            model.addAttribute("playerAttackMessage", "Our ship is defending, its attack is reduced by 40%, deals only " + playerAttack + " damage: (damage-armor)*0.6");
                         }
                     } else {
                         model.addAttribute("playerAttackMessage", "Our ship counterattacks, but the attack is ineffective.");
@@ -543,7 +547,7 @@ public class GameController {
                     model.addAttribute("sabotageMessage", "Sabotage cannot be used. Enemy ship's shields are still active.");
                 }
             } else {
-                model.addAttribute("sabotageMessage", "Not enough skill points.");
+                model.addAttribute("errorMessage", "Not enough skill points.");
             }
 
             // Update model attributes with current ship data
