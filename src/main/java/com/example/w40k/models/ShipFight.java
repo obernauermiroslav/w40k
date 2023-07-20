@@ -112,6 +112,9 @@ public class ShipFight {
             imagePath = "/images/Light-Cruiser.jpg";
             name = "Imperial Light Cruiser";
         } else if (imagePath.equals("/images/Light-Cruiser.jpg")) {
+            imagePath = "/images/battlecruiser.jpg";
+            name = "Imperial Battlecruiser";
+        } else if (imagePath.equals("/images/battlecruiser.jpg")) {
             imagePath = "/images/Cruiser.jpg";
             name = "Imperial Grand Cruiser";
         } else if (imagePath.equals("/images/Cruiser.jpg")) {

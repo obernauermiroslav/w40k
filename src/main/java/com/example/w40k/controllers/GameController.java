@@ -202,20 +202,24 @@ public class GameController {
                     // No armor reduction for enemy
                     playerAttack = playerAttack;
                 } else if (enemyArmor == 3) {
-                    // Enemy armor reduces player's attack by 3
+
                     playerAttack -= 3;
                 } else if (enemyArmor == 6) {
-                    // Enemy armor reduces player's attack by 6
+
                     playerAttack -= 6;
                 } else if (enemyArmor == 9) {
-                    // Player armor reduces enemy's attack by 6
+
                     playerAttack -= 9;
                 } else if (enemyArmor == 12) {
-                    // Player armor reduces enemy's attack by 6
+
                     playerAttack -= 12;
                 } else if (enemyArmor == 15) {
-                    // Player armor reduces enemy's attack by 6
+
                     playerAttack -= 15;
+                }
+                else if (enemyArmor == 20) {
+
+                    playerAttack -= 20;
                 }
 
                 if (playerAttack > 0) {
@@ -236,20 +240,32 @@ public class GameController {
                         // No armor reduction for player
                         enemyAttack = enemyAttack;
                     } else if (playerArmor == 3) {
-                        // Player armor reduces enemy's attack by 3
+
                         enemyAttack -= 3;
                     } else if (playerArmor == 6) {
-                        // Player armor reduces enemy's attack by 6
+
                         enemyAttack -= 6;
                     } else if (playerArmor == 9) {
-                        // Player armor reduces enemy's attack by 6
+
                         enemyAttack -= 9;
                     } else if (playerArmor == 12) {
-                        // Player armor reduces enemy's attack by 6
+
                         enemyAttack -= 12;
                     } else if (playerArmor == 15) {
-                        // Player armor reduces enemy's attack by 6
+
                         enemyAttack -= 15;
+                    }
+                    else if (playerArmor == 18) {
+
+                        enemyAttack -= 18;
+                    }
+                    else if (playerArmor == 21) {
+
+                        enemyAttack -= 21;
+                    }
+                    else if (playerArmor == 24) {
+
+                        enemyAttack -= 24;
                     }
 
                     if (enemyAttack > 0) {
@@ -282,6 +298,7 @@ public class GameController {
                     } else {
                         // All enemy ships are defeated, end the game
                         currentEnemyShip = null;
+                        model.addAttribute("result", "Congratulations! We have crushed our enemy");
                     }
                 }
 
@@ -313,21 +330,24 @@ public class GameController {
             playerShipFight = new ShipFight("Imperial Frigate", 300, 10, "/images/Frigate.jpg");
             playerShipFight.setShield(120);
             enemyShips = new ArrayList<>();
-            enemyShips.add(new ShipFight("Chaos Frigate", 230, 10, "/images/chaos_frigate.jpeg"));
-            enemyShips.add(new ShipFight("Chaos Light Cruiser", 280, 12, "/images/chaos_light-cruiser.jpeg"));
-            enemyShips.add(new ShipFight("Chaos Grand Cruiser", 330, 15, "/images/chaos_cruiser.jpeg"));
-            enemyShips.add(new ShipFight("Chaos Battleship", 420, 18, "/images/chaos_battleship.jpeg"));
-            enemyShips.add(new ShipFight("Chaos Gloriana", 530, 22, "/images/chaos_gloriana.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Frigate", 235, 11, "/images/chaos_frigate.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Light Cruiser", 280, 13, "/images/chaos_light-cruiser.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Heavy Cruiser", 330, 16, "/images/chaos Heavy_cruiser.webp"));
+            enemyShips.add(new ShipFight("Chaos Grand Cruiser", 375, 19, "/images/chaos_cruiser.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Battleship", 450, 22, "/images/chaos_battleship.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Gloriana", 570, 26, "/images/chaos_gloriana.jpeg"));
             enemyShips.get(0).setArmor(3);
-            enemyShips.get(0).setShield(100);// Chaos Frigate
+            enemyShips.get(0).setShield(110);// Chaos Frigate
             enemyShips.get(1).setArmor(6);
-            enemyShips.get(1).setShield(150);// Chaos Light Cruiser
+            enemyShips.get(1).setShield(160);// Chaos Light Cruiser
             enemyShips.get(2).setArmor(9);
-            enemyShips.get(2).setShield(200);// Chaos Grand Cruiser
+            enemyShips.get(2).setShield(210);// Chaos Heavy Cruiser
             enemyShips.get(3).setArmor(12);
-            enemyShips.get(3).setShield(250);// Chaos Battleship
+            enemyShips.get(3).setShield(255);// Chaos Grand Cruiser
             enemyShips.get(4).setArmor(15);
-            enemyShips.get(4).setShield(300);// Chaos Gloriana
+            enemyShips.get(4).setShield(320);// Chaos Battleship
+            enemyShips.get(5).setArmor(20);
+            enemyShips.get(5).setShield(360);// Chaos Gloriana
             currentEnemyShip = enemyShips.remove(0);
             gameStarted = true;
         }
@@ -440,17 +460,17 @@ public class GameController {
                     int enemyShields = currentEnemyShip.getShield();
 
                     if (enemyShields > 0) {
-                        playerAttack = (int) Math.round(playerAttack * 0.3); // 30% of player's attack as enemy's damage when enemy has shields
+                        playerAttack = (int) Math.round(playerAttack * 0.4); // 40% of player's attack as enemy's damage when enemy has shields
                     } else {
-                        playerAttack = (int) Math.round((playerAttack - enemyArmor) * 0.3); // 30% of player's attack considering enemy's armor
+                        playerAttack = (int) Math.round((playerAttack - enemyArmor) * 0.4); // 40% of player's attack considering enemy's armor
                     }
 
                     if (playerAttack > 0) {
                         currentEnemyShip.takeDamage(playerAttack);
                         if (enemyShields > 0) {
-                            model.addAttribute("playerAttackMessage", " Our ship is defending, its attack is reduced by 70%, deals only " + playerAttack + " damage: damage*0.3");
+                            model.addAttribute("playerAttackMessage", " Our ship is defending, its attack is reduced by 60%, deals only " + playerAttack + " damage: damage*0.4");
                         } else {
-                            model.addAttribute("playerAttackMessage", "Our ship is defending, its attack is reduced by 70%, deals only " + playerAttack + " damage: (damage-armor)*0.3");
+                            model.addAttribute("playerAttackMessage", "Our ship is defending, its attack is reduced by 60%, deals only " + playerAttack + " damage: (damage-armor)*0.4");
                         }
                     } else {
                         model.addAttribute("playerAttackMessage", "Our ship counterattacks, but the attack is ineffective.");
