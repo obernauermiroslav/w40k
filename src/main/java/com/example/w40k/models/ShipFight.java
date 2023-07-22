@@ -1,14 +1,14 @@
 package com.example.w40k.models;
 
 public class ShipFight {
-    private String name; // New field for the ship name
+    private String name;
     private int health;
     private int attack;
     private int bonus;
-    private int armor; // New field for armor
-    private int shield; // New field for shield
-    private String imagePath; // New field for the image path
-    private int skillPoints; // New field for skill points
+    private int armor;
+    private int shield;
+    private String imagePath;
+    private int skillPoints;
     private int damageReduction;
 
     public ShipFight() {
@@ -19,11 +19,11 @@ public class ShipFight {
         this.name = name;
         this.health = health;
         this.attack = attack;
-        this.bonus = 0; // Initialize the bonus to 0
-        this.armor = 0; // Initialize the armor to 0
-        this.shield = 0; // Initialize the shield to 0
-        this.imagePath = imagePath; // Set the image path
-        this.skillPoints = 10; // Set initial skill points to 10
+        this.bonus = 0;
+        this.armor = 0;
+        this.shield = 0;
+        this.imagePath = imagePath;
+        this.skillPoints = 0;
     }
 
     public void setName(String name) {
@@ -139,7 +139,7 @@ public class ShipFight {
 
     public void upgradeHealth() {
         if (skillPoints > 0) {
-            health += 35;
+            health += 40;
             skillPoints -= 1;
         }
     }
@@ -160,12 +160,12 @@ public class ShipFight {
 
     public void upgradeShield() {
         if (skillPoints > 2) {
-            shield += 90;
+            shield += 100;
             skillPoints -= 3;
         }
     }
     public void defend() {
-        int damageReduction = getAttack() / 2; // Reduce damage by 50%
+        int damageReduction = getAttack() ;
         setDamageReduction(damageReduction);
     }
     public int calculateDamage(int damage) {

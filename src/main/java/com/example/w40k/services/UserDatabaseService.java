@@ -70,7 +70,6 @@ public class UserDatabaseService implements UserService{
         return userDetails;
     }
 
-
     public ResponseEntity<Responses> register(User user) {
         if (user.getUsername().isEmpty()) {
             return ResponseEntity.status(400).body(new Responses("username", "User name is empty!"));
@@ -108,7 +107,6 @@ public class UserDatabaseService implements UserService{
         return ResponseEntity.ok(new Responses("success", user.getUsername() +
                 ", you were successfully registered! Now you can log in and have to activate your account to gain full access."));
     }
-
 
     @Override
     public ResponseEntity<Responses> login(UserDto user) {
@@ -178,5 +176,3 @@ public class UserDatabaseService implements UserService{
         return false;
     }
 }
-
-

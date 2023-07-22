@@ -55,7 +55,5 @@ public class W40kApplication implements CommandLineRunner {
 		shipRepository.save(new Ships(26L, "Hellfire Class Grand Cruiser ", ShipClass.CRUISERS,UserRole.CHAOS_FORCES));
 		shipRepository.save(new Ships(27L, "Terminus Est Battleship ", ShipClass.BATTLESHIPS,UserRole.CHAOS_FORCES));
 		shipRepository.save(new Ships(28L, "Desecrator Class Battleship ", ShipClass.ESCORTS,UserRole.CHAOS_FORCES));
-
-
 	}
 }

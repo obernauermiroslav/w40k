@@ -9,9 +9,9 @@ List<Ships> findAll();
 
 List<Ships> findChaos();
 
-    Ships save(Ships ships);
+Ships save(Ships ships);
 
-     Optional<Ships> findById(Long id);
+Optional<Ships> findById(Long id);
 
-    void delete(Ships ships);
+void delete(Ships ships);
 }

@@ -49,7 +49,31 @@
             padding: 1px;
         }
         button {
-            margin-bottom: 5px;
+            margin-bottom: 3px;
+        }
+        p {
+            font-size: 16px;
+        }
+        .help-btn {
+            display: none;
+            position: relative;
+            background-color: #f1f1f1;
+            border-radius: 50%;
+            padding: 5px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Show the small "?" button when hovering over the main button */
+        .button-container:hover .help-btn {
+            display: inline-block;
+        }
+
+        /* Position the small "?" button relative to the main button */
+        .button-container {
+            position: relative;
+            display: inline-block;
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -74,34 +98,60 @@
             <span th:text="'Health: ' + ${playerShip.health}"></span>
             <br>
             <br>
-            <span th:text="'Damage: ' + ${playerShip.attack}"></span>
+            <span th:text="'Attack: ' + ${playerShip.attack}"></span>
         </div>
     </div>
-    <div id="upgrade-options" th:if="${playerShip != null}">
-        <h2>Game Options</h2>
+    <div id="upgrade-options" th:if="${playerShip != null and enemyShip != null}">
+        <h4>Game Options</h4>
         <div>
-            <form method="post" action="/startGame">
+            <form method="post" action="/startGame" class="button-container">
                 <button id="startGame" type="submit">All hands, open fire! </button>
-            </form>
-            <form action="/defend" method="post">
-                <button type="submit">Brace for impact!</button>
+                <span class="help-btn" onclick="window.location.href='/SecondGame'">?</span>
             </form>
 
+            <!-- Brace for impact! button -->
+            <form action="/defend" method="post" class="button-container">
+                <button type="submit">Brace for impact!</button>
+                <span class="help-btn" onclick="window.location.href='/SecondGame'">?</span>
+            </form>
+
+            <!-- Focus Fire! button -->
+            <form th:action="@{/critical}" method="post" th:object="${focusFireActivated}" class="button-container">
+                <input type="hidden" name="focusFireActivated" th:value="${focusFireActivated}" />
+                <button type="submit">
+                    <span th:if="${focusFireActivated}">Focus Fire (Activated)</span>
+                    <span th:unless="${focusFireActivated}">Focus Fire!</span>
+                </button>
+                <span class="help-btn" onclick="window.location.href='/SecondGame'">?</span>
+            </form>
             <p>Skill Points(SP): <span th:text="${playerShip.skillPoints}"></span></p>
-            <form action="/upgradeShield" method="post">
-                <button type="submit">Upgrade Shields (3SP)</button>
+            <form action="/upgradeShield" method="post" class="button-container">
+                <button type="submit">Shield overload (3SP)</button>
+                <span class="help-btn" onclick="window.location.href='/SecondGame'">?</span>
             </form>
-            <form action="/upgradeArmor" method="post">
+
+            <!-- Upgrade Armor (3SP) button -->
+            <form action="/upgradeArmor" method="post" class="button-container">
                 <button type="submit">Upgrade Armor (3SP)</button>
+                <span class="help-btn" onclick="window.location.href='/SecondGame'">?</span>
             </form>
-            <form action="/upgradeHealth" method="post">
+
+            <!-- Emergency repair (1SP) button -->
+            <form action="/upgradeHealth" method="post" class="button-container">
                 <button type="submit">Emergency repair (1SP)</button>
+                <span class="help-btn" onclick="window.location.href='/SecondGame'">?</span>
             </form>
-            <form action="/upgradeAttack" method="post">
+
+            <!-- Upgrade Damage (2SP) button -->
+            <form action="/upgradeAttack" method="post" class="button-container">
                 <button type="submit">Upgrade Damage (2SP)</button>
+                <span class="help-btn" onclick="window.location.href='/SecondGame'">?</span>
             </form>
-            <form action="/sabotage" method="post">
+
+            <!-- Sabotage (2SP) button -->
+            <form action="/sabotage" method="post" class="button-container">
                 <button type="submit">Sabotage (2SP)</button>
+                <span class="help-btn" onclick="window.location.href='/SecondGame'">?</span>
             </form>
         </div>
         <br>
@@ -126,7 +176,7 @@
             <span th:text="'Health: ' + ${enemyShip.health}"></span>
             <br>
             <br>
-            <span th:text="'Damage: ' + ${enemyShip.attack}"></span>
+            <span th:text="'Attack: ' + ${enemyShip.attack}"></span>
         </div>
     </div>
 </div>
@@ -141,6 +191,3 @@
 </div>
 </body>
 </html>
-
-
-

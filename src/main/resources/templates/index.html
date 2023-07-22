@@ -9,7 +9,6 @@
 <section>
     <div class="container">
         <div class="row">
-
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
@@ -17,7 +16,20 @@
                         <button class="btn btn-secondary" onclick="location.href='/readme'">Readme</button>
                         <button class="btn btn-secondary" onclick="location.href='/create'">Create new Ship</button>
                         <button class="btn btn-secondary" onclick="location.href='/game'">Play game</button>
-                        <button class="btn btn-secondary" onclick="location.href='/shipGame'">Play another game</button>
+
+                        <form th:if="${showDifficultyOptions}" th:action="@{/selectDifficulty}" method="post">
+                            <div class="input-group" id="container">
+                                <button id="button" class="btn btn-secondary" type="submit">Play another game</button>
+                                <div id="game" class="d-none">
+                                    <label>
+                                        <input type="radio" name="difficulty" value="easy" checked> Easy
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="difficulty" value="hard"> Hard
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
                     </th>
                 </tr>
                 <tr>
@@ -40,7 +52,6 @@
                     </td>
                 </tr>
                 </tbody>
-
             </table>
         </div>
     </div>

@@ -20,4 +20,22 @@ tr:hover {
 
 btn{
     margin-left: 250px;
+
+}
+
+#container:hover #game {
+    display: block;
+}
+
+#button{
+    margin-top: -22px;
+    margin-left: 250px;
+    position: absolute;
+}
+
+#game{
+    display: none;
+    margin-top: -21px;
+    margin-left: 367px;
+    position: absolute;
 }

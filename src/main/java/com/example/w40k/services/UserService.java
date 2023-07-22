@@ -12,9 +12,7 @@ import java.util.Optional;
 
 public interface UserService {
    // List<User> findAll();
-
     User save(User user);
-
     Optional<User> findById(Long id);
     Optional<User> findByUsername(String user);
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
@@ -22,7 +20,5 @@ public interface UserService {
     ResponseEntity<Responses> register(User user) throws Exception;
     ResponseEntity<Responses> login(UserDto user);
     ResponseEntity<?> activate(String username,String activationCode);
-
     Optional<User> findByActivationCode(String activationCode);
-
 }

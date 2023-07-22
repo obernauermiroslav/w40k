@@ -28,6 +28,4 @@ public class EmailSenderService {
         String url = "http://localhost:8080/activate?activationCode=" + activationCode;
         return url;
     }
-
 }
-

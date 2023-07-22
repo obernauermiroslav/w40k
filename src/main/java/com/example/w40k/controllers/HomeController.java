@@ -18,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +26,8 @@ public class HomeController {
     private final ShipService shipService;
     private final UserService userService;
     private final EmailSenderService emailSenderService;
+
+    private boolean showDifficultyOptions = true;
 
     @Autowired
     public HomeController(ShipService shipService, UserService userService,EmailSenderService emailSenderService) {
@@ -51,6 +52,7 @@ public class HomeController {
     public String index(Model model) {
         List<Ships> ships = shipService.findAll();
         model.addAttribute("ships", ships);
+        model.addAttribute("showDifficultyOptions", showDifficultyOptions);
         return "index";
     }
 
