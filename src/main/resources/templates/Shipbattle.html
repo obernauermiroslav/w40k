@@ -158,9 +158,7 @@
         <div class="error-message" th:if="${errorMessage}">
             <span th:text="${errorMessage}"></span>
         </div>
-
     </div>
-
     <div id="enemy-ship" class="ship" th:if="${enemyShip != null}">
         <img id="enemyShip" th:src="${enemyShip.imagePath}" alt="Enemy Ship">
         <div class="ship-info">

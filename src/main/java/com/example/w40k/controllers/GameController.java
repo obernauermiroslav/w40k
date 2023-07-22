@@ -187,9 +187,9 @@ public class GameController {
                 }
                 int initialSkillPoints;
                 if (difficulty.equals("easy")) {
-                    initialSkillPoints = 16;
+                    initialSkillPoints = 12;
                 } else {
-                    initialSkillPoints = 9;
+                    initialSkillPoints = 4;
                 }
                 playerShipFight.setSkillPoints(initialSkillPoints);
                 gameStarted = true;
@@ -267,6 +267,10 @@ public class GameController {
                 else if (enemyArmor == 21) {
 
                     playerAttack -= 21;
+                }
+                else if (enemyArmor == 24) {
+
+                    playerAttack -= 24;
                 }
 
                 if (playerAttack > 0) {
@@ -376,12 +380,12 @@ public class GameController {
             playerShipFight = new ShipFight("Imperial Frigate", 300, 10, "/images/Frigate.jpg");
             playerShipFight.setShield(120);
             enemyShips = new ArrayList<>();
-            enemyShips.add(new ShipFight("Chaos Frigate", 235, 11, "/images/chaos_frigate.jpeg"));
-            enemyShips.add(new ShipFight("Chaos Light Cruiser", 280, 13, "/images/chaos_light-cruiser.jpeg"));
-            enemyShips.add(new ShipFight("Chaos Heavy Cruiser", 330, 17, "/images/chaos Heavy_cruiser.webp"));
-            enemyShips.add(new ShipFight("Chaos Grand Cruiser", 375, 20, "/images/chaos_cruiser.jpeg"));
-            enemyShips.add(new ShipFight("Chaos Battleship", 450, 23, "/images/chaos_battleship.jpeg"));
-            enemyShips.add(new ShipFight("Chaos Gloriana", 575, 27, "/images/chaos_gloriana.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Frigate", 250, 12, "/images/chaos_frigate.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Light Cruiser", 295, 15, "/images/chaos_light-cruiser.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Heavy Cruiser", 345, 19, "/images/chaos Heavy_cruiser.webp"));
+            enemyShips.add(new ShipFight("Chaos Grand Cruiser", 390, 23, "/images/chaos_cruiser.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Battleship", 465, 26, "/images/chaos_battleship.jpeg"));
+            enemyShips.add(new ShipFight("Chaos Gloriana", 590, 29, "/images/chaos_gloriana.jpeg"));
             enemyShips.get(0).setArmor(3);
             enemyShips.get(0).setShield(115);// Chaos Frigate
             enemyShips.get(1).setArmor(6);
@@ -392,7 +396,7 @@ public class GameController {
             enemyShips.get(3).setShield(265);// Chaos Grand Cruiser
             enemyShips.get(4).setArmor(15);
             enemyShips.get(4).setShield(330);// Chaos Battleship
-            enemyShips.get(5).setArmor(21);
+            enemyShips.get(5).setArmor(24);
             enemyShips.get(5).setShield(370);// Chaos Gloriana
             currentEnemyShip = enemyShips.remove(0);
             gameStarted = true;
