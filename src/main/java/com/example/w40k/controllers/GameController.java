@@ -160,20 +160,20 @@ public class GameController {
     }
 
     @Controller
-    public class GameControllerSecond {
+    public static class GameControllerSecond {
 
-        private ShipFight playerShipFight;
+        private static ShipFight playerShipFight;
         private ShipFight currentEnemyShip;
         private List<ShipFight> enemyShips;
         private boolean gameStarted = false;
         private boolean focusFireActivated = false;
         private static final String DEFAULT_DIFFICULTY = "easy";
 
-        @ModelAttribute("playerShipFight")
-        public ShipFight initializePlayerShipFight() {
-            if (playerShipFight == null) {
-                playerShipFight = new ShipFight();
-            }return playerShipFight;
+        public void setPlayerShipFight(ShipFight playerShipFight) {
+            this.playerShipFight = playerShipFight;
+        }
+        public void setCurrentEnemyShip(ShipFight currentEnemyShip) {
+            this.currentEnemyShip = currentEnemyShip;
         }
 
         @GetMapping("/shipGame")
@@ -187,9 +187,9 @@ public class GameController {
                 }
                 int initialSkillPoints;
                 if (difficulty.equals("easy")) {
-                    initialSkillPoints = 12;
+                    initialSkillPoints = 13;
                 } else {
-                    initialSkillPoints = 4;
+                    initialSkillPoints = 7;
                 }
                 playerShipFight.setSkillPoints(initialSkillPoints);
                 gameStarted = true;
@@ -377,7 +377,7 @@ public class GameController {
         }
 
         private void initializeGame() {
-            playerShipFight = new ShipFight("Imperial Frigate", 300, 10, "/images/Frigate.jpg");
+            playerShipFight = new ShipFight("Imperial Frigate", 300, 11, "/images/Frigate.jpg");
             playerShipFight.setShield(120);
             enemyShips = new ArrayList<>();
             enemyShips.add(new ShipFight("Chaos Frigate", 250, 12, "/images/chaos_frigate.jpeg"));
