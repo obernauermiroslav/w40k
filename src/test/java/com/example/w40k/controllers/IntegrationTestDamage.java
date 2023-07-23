@@ -3,20 +3,24 @@ package com.example.w40k.controllers;
 import com.example.w40k.models.ShipFight;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.ui.Model;
 import java.util.Collection;
 import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UnitTestDamageSecond {
+@SpringBootTest
+public class IntegrationTestDamage {
 
+    @Autowired
     private GameController.GameControllerSecond gameController;
     private ShipFight playerShip;
     private ShipFight enemyShip;
 
     @BeforeEach
     public void setUp() {
-        gameController = new GameController.GameControllerSecond();
         playerShip = new ShipFight();
         enemyShip = new ShipFight();
     }
@@ -30,7 +34,14 @@ public class UnitTestDamageSecond {
         gameController.setPlayerShipFight(playerShip);
         gameController.setCurrentEnemyShip(enemyShip);
 
-        Model model = new Model() {
+        // Calculate expected damage
+        int expectedDamage = playerShip.getAttack() - enemyShip.getArmor();
+
+        // Get the enemy's initial health
+        int initialHealth = enemyShip.getHealth();
+
+        // Perform the action
+        String viewName = gameController.performAction(new Model() {
             @Override
             public Model addAttribute(String attributeName, Object attributeValue) {
                 return this;
@@ -70,16 +81,7 @@ public class UnitTestDamageSecond {
             public Map<String, Object> asMap() {
                 return null;
             }
-        };
-
-        // Calculate expected damage
-        int expectedDamage = playerShip.getAttack() - enemyShip.getArmor();
-
-        // Get the enemy's initial health
-        int initialHealth = enemyShip.getHealth();
-
-        // Perform the action
-        gameController.performAction(model, null, null);
+        }, null, null);
 
         // Verify that the enemy ship took the correct amount of damage
         assertEquals(initialHealth - expectedDamage, 95);
