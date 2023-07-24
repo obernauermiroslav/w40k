@@ -232,7 +232,7 @@ public class GameController {
                 int playerShields = playerShipFight.getShield();
 
                 if (focusFireActivated && playerShipFight.getSkillPoints() > 0) {
-                    int critical = (int) (Math.random() * 6) + 6; // Random value between 6 and 10
+                    int critical = (int) (Math.random() * 10) + 8; // Random value between 8 and 17
                     playerAttack += critical;
                     playerShipFight.setSkillPoints(playerShipFight.getSkillPoints() - 1);
                   //  model.addAttribute("playerAttackMessage", "Focus Fire activated! Our ship deals " + critical + " additional damage.");
