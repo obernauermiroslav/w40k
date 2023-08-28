@@ -187,9 +187,9 @@ public class GameController {
                 }
                 int initialSkillPoints;
                 if (difficulty.equals("easy")) {
-                    initialSkillPoints = 13;
+                    initialSkillPoints = 15;
                 } else {
-                    initialSkillPoints = 7;
+                    initialSkillPoints = 10;
                 }
                 playerShipFight.setSkillPoints(initialSkillPoints);
                 gameStarted = true;
